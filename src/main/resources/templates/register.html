@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MatchDay register</title>
+    <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <img src="/images/logo.png" alt="MatchDay Logo" class="logo">
+        <h1>MatchDay</h1>
+    </div>
+    <div class="right-panel">
+        <div class="register-form">
+            <h2>Register</h2>
+            <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
+                <div class="form-grid">
+                    <div class="form-column">
+                        <input type="text" placeholder="Username" class="input-field" th:field="*{username}">
+                        <input type="text" placeholder="Email" class="input-field" th:field="*{email}">
+                        <input type="text" placeholder="Password" class="input-field" th:field="*{password}">
+                        <input type="text" placeholder="Confirm password" class="input-field" th:field="*{confirmPassword}">
+                    </div>
+                    <div class="form-column">
+                        <input type="text" placeholder="First Name" class="input-field" th:field="*{firstName}">
+                        <input type="text" placeholder="Last Name" class="input-field" th:field="*{lastName}">
+                        <select class="select-field" th:field="*{country}" >
+                            <option value="" selected>Select your country</option>
+                            <option th:value="${country}" th:each="country : ${T(bg.softuni.matchday.user.model.Country).values()}" th:text="${#strings.capitalize(#strings.toLowerCase(country))}"></option>
+                        </select>
+                        <select class="select-field" th:field="*{favouriteTeam}">
+                            <option value="" selected class="select-placeholder">Select your favourite team</option>
+                            <option th:each="team : ${teamNames}" th:value="${team}" th:text="${team}"></option>
+                        </select>
+                    </div>
+                </div>
+                <input type="text" placeholder="Profile picture" class="profile-picture" th:field="*{profilePicture}">
+                <p>or <a href="/">Login</a> if you already have an account</p>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

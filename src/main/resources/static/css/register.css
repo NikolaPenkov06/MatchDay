@@ -1,0 +1,212 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif; /* Using Roboto for smoother, modern edges; falls back to Arial */
+    background: linear-gradient(45deg, #2E7D32, #4CAF50); /* Dark green (#2E7D32) to light green (#4CAF50), bottom-left to top-right */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    height: 60%;
+    border-radius: 0; /* No border radius, flat edges as in the image */
+    overflow: hidden;
+    position: relative; /* For positioning the center line and circle */
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.left-panel {
+    background: linear-gradient(45deg, #2E7D32, #4CAF50); /* Matches the left side’s gradient, bottom-left to top-right */
+}
+
+.right-panel {
+    background: linear-gradient(135deg, #2E7D32, #4CAF50); /* Mirrors the left side with a slight angle adjustment for consistency */
+}
+
+.logo {
+    width: 300px; /* Matches the logo size in the image */
+    height: 280px;
+    position: absolute;
+    top: 90px; /* Positioned directly above "MatchDay," adjusted to match the image */
+    left: 230px; /* Kept near the left edge, as in the image */
+}
+
+h1 {
+    color: white;
+    font-size: 80px; /* Matches the bold, large "MatchDay" text in the image */
+    font-weight: bold;
+    margin: 0;
+    position: absolute;
+    top: 370px; /* Positioned below the logo, as in the image */
+    left: 173px; /* Kept near the left edge, as in the image */
+    font-family: 'Segoe UI', Arial, sans-serif; /* Smoother, modern font with Roboto */
+}
+
+.register-form h2 {
+    color: white;
+    font-size: 40px; /* Matches the "Login" text size in the image */
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif; /* Smoother, modern font */
+}
+
+.form-grid {
+    display: flex; /* Uses flexbox for side-by-side columns */
+    justify-content: center; /* Centers the columns within the right panel, keeping them together */
+    margin-bottom: 0px; /* Space before the Profile picture field */
+    gap: 10px; /* Maintains the horizontal gap between columns, but now centered */
+}
+
+.form-column {
+    width: 40%; /* Narrower columns to bring them closer and keep them centered, matching your request */
+    display: flex;
+    margin-right: 20px;
+    flex-direction: column; /* Stacks fields vertically in each column */
+}
+
+.input-field {
+    width: 100%; /* Full width within each column */
+    padding: 10px;
+    margin: 2px 0; /* Reduced margin for tighter vertical spacing, as in the image */
+    border: none;
+    border-radius: 20px; /* Rounded corners for inputs, as in the image */
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    font-size: 16px; /* Matches the placeholder text size */
+    outline: none;
+    color: black; /* Matches the gray placeholder text color */
+    appearance: none; /* Removes default browser styling for selects */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-image: none; /* Removes default arrow for cross-browser consistency */
+    cursor: text;
+    margin-bottom: 10px/* Indicates interactivity for select elements */
+}
+
+.profile-picture{
+    width: 84%; /* Full width within each column */
+    padding: 10px;
+    margin: 2px 0;
+    margin-left: 35px; /* Reduced margin for tighter vertical spacing, as in the image */
+    border: none;
+    border-radius: 20px; /* Rounded corners for inputs, as in the image */
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    font-size: 16px; /* Matches the placeholder text size */
+    outline: none;
+    color: black; /* Matches the gray placeholder text color */
+    appearance: none; /* Removes default browser styling for selects */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-image: none; /* Removes default arrow for cross-browser consistency */
+    cursor: text;
+    margin-bottom: 10px/* Indicates interactivity for select elements */
+}
+
+.select-field{
+    width: 107%; /* Full width within each column */
+    padding: 10px;
+    margin: 2px 0; /* Reduced margin for tighter vertical spacing, as in the image */
+    border: none;
+    border-radius: 20px; /* Rounded corners for inputs, as in the image */
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    font-size: 16px; /* Matches the placeholder text size */
+    outline: none;
+    color: black; /* Matches the gray placeholder text color */
+    appearance: none; /* Removes default browser styling for selects */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-image: none; /* Removes default arrow for cross-browser consistency */
+    cursor: pointer;
+    margin-bottom: 10px/* Indicates interactivity for select elements */
+}
+
+.input-field::placeholder {
+    color: #888; /* Gray placeholder text, as in the image */
+    opacity: 1; /* Ensure placeholder is fully visible */
+}
+
+.profile-picture::placeholder {
+    color: #888; /* Gray placeholder text, as in the image */
+    opacity: 1; /* Ensure placeholder is fully visible */
+}
+
+.select-field::placeholder{
+    color: #888; /* Gray placeholder text, as in the image */
+    opacity: 1; /* Ensure placeholder is fully visible */
+}
+
+
+
+select.select-field{
+    background: rgba(255, 255, 255, 0.9); /* Same as text inputs for consistency */
+    padding-right: 30px; /* Extra padding for the drop-down arrow space */
+    background-position: right 10px center; /* Position for custom arrow (if added) */
+    background-repeat: no-repeat; /* Ensures no repeat if adding a custom arrow */
+}
+
+.register-form p {
+    text-align: center;
+    color: white;
+    font-size: 15px; /* Matches the "or Register if you don’t have an account" text size */
+    margin-top: 15px;
+    /* Indicates the "Register" link is clickable */
+    font-family: 'Segoe UI', Arial, sans-serif; /* Smoother, modern font */
+}
+
+.register-form a {
+    color: white; /* Ensures "Register" is white, matching the image */
+    text-decoration: none; /* No underline for "Register", as in the image */
+    font-weight: 640;
+    cursor: pointer;
+}
+
+/* Center line and circle for the soccer field effect */
+.container::before {
+    content: "";
+    position: absolute;
+    width: 2px; /* Thin white line, as in the image */
+    height: 100%;
+    background: white;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    width: 100px; /* Matches the circle size in the image */
+    height: 100px;
+    border: 2px solid white; /* White border, as in the image */
+    border-radius: 50%; /* Perfect circle */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+/* Custom arrow for select drop-downs (optional, for a cleaner look) */
+select.input-field:after {
+    content: "▼"; /* Unicode down arrow */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensures the arrow isn’t clickable */
+    color: #888; /* Matches placeholder color */
+}
+
+/* Ensure the select element doesn’t show a default arrow in browsers */
+select.input-field::-ms-expand {
+    display: none; /* Hides the default arrow in IE/Edge */
+}

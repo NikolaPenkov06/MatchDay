@@ -40,6 +40,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Country country;
 
