@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', Arial, sans-serif; /* Using Roboto for smoother, modern edges; falls back to Arial */
-    background: linear-gradient(45deg, #2E7D32, #4CAF50); /* Dark green (#2E7D32) to light green (#4CAF50), bottom-left to top-right */
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(45deg, #2E7D32, #4CAF50);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -13,9 +13,9 @@ body {
     display: flex;
     width: 80%;
     height: 60%;
-    border-radius: 0; /* No border radius, flat edges as in the image */
+    border-radius: 0;
     overflow: hidden;
-    position: relative; /* For positioning the center line and circle */
+    position: relative;
 }
 
 .left-panel, .right-panel {
@@ -27,30 +27,30 @@ body {
 }
 
 .left-panel {
-    background: linear-gradient(45deg, #2E7D32, #4CAF50); /* Matches the left side’s gradient, bottom-left to top-right */
+    background: linear-gradient(45deg, #2E7D32, #4CAF50);
 }
 
 .right-panel {
-    background: linear-gradient(135deg, #2E7D32, #4CAF50); /* Mirrors the left side with a slight angle adjustment for consistency */
+    background: linear-gradient(135deg, #2E7D32, #4CAF50);
 }
 
 .logo {
-    width: 300px; /* Matches the logo size in the image */
+    width: 300px;
     height: 280px;
     position: absolute;
-    top: 90px; /* Positioned directly above "MatchDay," adjusted to match the image */
-    left: 230px; /* Kept near the left edge, as in the image */
+    top: 90px;
+    left: 230px;
 }
 
 h1 {
     color: white;
-    font-size: 80px; /* Matches the bold, large "MatchDay" text in the image */
+    font-size: 80px;
     font-weight: bold;
     margin: 0;
     position: absolute;
-    top: 370px; /* Positioned below the logo, as in the image */
-    left: 173px; /* Kept near the left edge, as in the image */
-    font-family: 'Segoe UI', Arial, sans-serif; /* Smoother, modern font with Roboto */
+    top: 370px;
+    left: 173px;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 .login-form {
@@ -59,48 +59,64 @@ h1 {
 
 .login-form h2 {
     color: white;
-    font-size: 40px; /* Matches the "Login" text size in the image */
+    font-size: 40px;
     margin-bottom: 20px;
-    font-family: 'Segoe UI', Arial, sans-serif; /* Smoother, modern font */
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 .input-field {
-    width: 60%; /* Matches the width of the input fields in the image */
+    width: 60%;
     padding: 10px;
     margin: 10px 0;
     border: none;
-    border-radius: 20px; /* Rounded corners for the inputs, as in the image */
-    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background for inputs */
-    font-size: 16px; /* Matches the placeholder text size */
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
     outline: none;
-    color: black; /* Matches the gray placeholder text color (Username, Password) */
+    color: black;
 }
 
 .input-field::placeholder {
-    color: #888; /* Gray placeholder text, as in the image */
-    opacity: 1; /* Ensure placeholder is fully visible */
+    color: #888;
+    opacity: 1;
 }
 
 .login-form p {
     color: white;
-    font-size: 15px; /* Matches the "or Register if you don’t have an account" text size */
+    font-size: 15px;
     margin-top: 15px;
-     /* Indicates the "Register" link is clickable */
-    font-family: 'Segoe UI', Arial, sans-serif; /* Smoother, modern font */
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 .login-form a {
-    color: white; /* Ensures "Register" is white, matching the image */
-    text-decoration: none; /* No underline for "Register", as in the image */
+    color: white;
+    text-decoration: none;
     font-weight: 640;
     cursor: pointer;
 }
 
-/* Center line and circle for the soccer field effect */
+.login-button {
+    width: 20%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 20px;
+    background: #2E7D32;
+    color: white;
+    font-size: 16px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.login-button:hover {
+    transform: scale(1.1);
+}
+
 .container::before {
     content: "";
     position: absolute;
-    width: 2px; /* Thin white line, as in the image */
+    width: 2px;
     height: 100%;
     background: white;
     left: 50%;
@@ -111,10 +127,10 @@ h1 {
 .container::after {
     content: "";
     position: absolute;
-    width: 100px; /* Matches the circle size in the image */
+    width: 100px;
     height: 100px;
-    border: 2px solid white; /* White border, as in the image */
-    border-radius: 50%; /* Perfect circle */
+    border: 2px solid white;
+    border-radius: 50%;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

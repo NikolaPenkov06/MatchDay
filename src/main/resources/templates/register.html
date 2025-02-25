@@ -13,7 +13,7 @@
     </div>
     <div class="right-panel">
         <div class="register-form">
-            <h2>Register</h2>
+            <h2>Create a new account</h2>
             <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
                 <div class="form-grid">
                     <div class="form-column">
@@ -36,6 +36,7 @@
                     </div>
                 </div>
                 <input type="text" placeholder="Profile picture" class="profile-picture" th:field="*{profilePicture}">
+                <button type="submit" class="register-button">Register</button>
                 <p>or <a href="/">Login</a> if you already have an account</p>
             </form>
         </div>
