@@ -65,20 +65,35 @@ h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 0px;
-    gap: 10px;
+    gap: 40px;
 }
 
 .form-column {
     width: 40%;
     display: flex;
-    margin-right: 20px;
     flex-direction: column;
+    row-gap: 0px;
+}
+
+label {
+    color: #a0e18b;
+    font-size: 16px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0px;
+}
+
+.pfp-label{
+    color: #a0e18b;
+    font-size: 16px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0px;
+    margin-left: 36px;
 }
 
 .input-field {
     width: 100%;
     padding: 10px;
-    margin: 2px 0;
+    margin: 5px 0;
     border: none;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.9);
@@ -88,13 +103,12 @@ h1 {
     appearance: none;
     background-image: none;
     cursor: text;
-    margin-bottom: 10px
 }
 
-.profile-picture{
-    width: 84%;
+.profile-picture {
+    width: 88%;
     padding: 10px;
-    margin: 2px 0;
+    margin: 5px 0;
     margin-left: 35px;
     border: none;
     border-radius: 20px;
@@ -105,13 +119,12 @@ h1 {
     appearance: none;
     background-image: none;
     cursor: text;
-    margin-bottom: 10px
 }
 
-.select-field{
-    width: 107%;
+.select-field {
+    width: 110%;
     padding: 10px;
-    margin: 2px 0;
+    margin: 5px 0;
     border: none;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.9);
@@ -121,7 +134,6 @@ h1 {
     appearance: none;
     background-image: none;
     cursor: pointer;
-    margin-bottom: 10px
 }
 
 .input-field::placeholder {
@@ -134,14 +146,12 @@ h1 {
     opacity: 1;
 }
 
-.select-field::placeholder{
+.select-field::placeholder {
     color: #888;
     opacity: 1;
 }
 
-
-
-select.select-field{
+select.select-field {
     background: rgba(255, 255, 255, 0.9);
     padding-right: 30px;
     background-position: right 10px center;
@@ -167,7 +177,7 @@ select.select-field{
     width: 20%;
     padding: 12px;
     margin: 10px 0;
-    margin-left: 227px;
+    margin-left: 40%;
     border: none;
     border-radius: 20px;
     background: #2E7D32;
@@ -205,7 +215,6 @@ select.select-field{
     transform: translate(-50%, -50%);
     z-index: 1;
 }
-
 
 select.input-field:after {
     content: "▼";

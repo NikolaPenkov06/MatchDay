@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -36,8 +37,6 @@ public class IndexController {
 
     @GetMapping("/")
     public ModelAndView getIndexPage(){
-
-        teamService.addTeams();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
@@ -67,6 +66,7 @@ public class IndexController {
         modelAndView.addObject("registerRequest", new RegisterRequest());
 
         List<String> teamNames = teamService.getAllTeamsNames();
+        Collections.sort(teamNames);
         modelAndView.addObject("teamNames", teamNames);
         return modelAndView;
     }
