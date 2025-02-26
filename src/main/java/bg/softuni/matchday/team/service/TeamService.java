@@ -18,10 +18,12 @@ import java.util.stream.Collectors;
 public class TeamService {
 
     private final TeamRepository teamRepository;
+    private final LeagueRepository leagueRepository;
 
     @Autowired
-    public TeamService(TeamRepository teamRepository) {
+    public TeamService(TeamRepository teamRepository, LeagueRepository leagueRepository) {
         this.teamRepository = teamRepository;
+        this.leagueRepository = leagueRepository;
     }
 
     public List<String> getAllTeamsNames() {

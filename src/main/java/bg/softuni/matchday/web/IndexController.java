@@ -25,15 +25,19 @@ public class IndexController {
 
     private final TeamService teamService;
     private final UserService userService;
+    private final LeagueService leagueService;
 
     @Autowired
-    public IndexController(TeamService teamService, UserService userService) {
+    public IndexController(TeamService teamService, UserService userService, LeagueService leagueService) {
         this.teamService = teamService;
         this.userService = userService;
+        this.leagueService = leagueService;
     }
 
     @GetMapping("/")
     public ModelAndView getIndexPage(){
+
+        teamService.addTeams();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
