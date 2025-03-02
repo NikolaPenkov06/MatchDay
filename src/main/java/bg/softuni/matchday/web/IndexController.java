@@ -1,6 +1,5 @@
 package bg.softuni.matchday.web;
 
-import bg.softuni.matchday.league.service.LeagueService;
 import bg.softuni.matchday.team.service.TeamService;
 import bg.softuni.matchday.user.model.User;
 import bg.softuni.matchday.user.service.UserService;
@@ -26,36 +25,49 @@ public class IndexController {
 
     private final TeamService teamService;
     private final UserService userService;
-    private final LeagueService leagueService;
 
     @Autowired
-    public IndexController(TeamService teamService, UserService userService, LeagueService leagueService) {
+    public IndexController(TeamService teamService, UserService userService) {
         this.teamService = teamService;
         this.userService = userService;
-        this.leagueService = leagueService;
     }
 
     @GetMapping("/")
-    public ModelAndView getIndexPage(){
+    public String getIndexPage(){
+
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public ModelAndView getLoginPage(){
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("login");
         modelAndView.addObject("loginRequest", new LoginRequest());
 
         return modelAndView;
     }
 
-    @PostMapping("/")
-    public String login(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session){
+    @PostMapping("/login")
+    public ModelAndView login(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session){
+
+        ModelAndView modelAndView = new ModelAndView("login");
 
         if(bindingResult.hasErrors()){
-            return "";
+            return modelAndView;
         }
 
         User loggedInUser = userService.login(loginRequest);
-        session.setAttribute("user_id",loggedInUser.getId());
 
-        return "redirect:/home";
+        if(loggedInUser == null){
+            boolean wrongCredentials = true;
+            modelAndView.addObject("wrongCredentials", wrongCredentials);
+            return modelAndView;
+        }
+
+        session.setAttribute("user_id", loggedInUser.getId());
+
+        return new ModelAndView("redirect:/home");
     }
 
     @GetMapping("/register")
@@ -64,23 +76,62 @@ public class IndexController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("register");
         modelAndView.addObject("registerRequest", new RegisterRequest());
+        modelAndView.addObject("passwordsMatch", true);
 
-        List<String> teamNames = teamService.getAllTeamsNames();
-        Collections.sort(teamNames);
-        modelAndView.addObject("teamNames", teamNames);
+        getListOfTeamNames(modelAndView);
         return modelAndView;
     }
 
     @PostMapping("/register")
     public ModelAndView register(@Valid RegisterRequest registerRequest, BindingResult bindingResult){
 
-        if(bindingResult.hasErrors()){
-            return new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView("register");
+
+        System.out.println();
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("registerRequest", registerRequest);
+
+            return checkIfUsernameOrEmailIsInUse(registerRequest, modelAndView, true);
+
         }
 
-        userService.register(registerRequest);
+        return checkIfUsernameOrEmailIsInUse(registerRequest, modelAndView, false);
 
-        return new ModelAndView("redirect:/login");
+    }
+
+    public ModelAndView checkIfUsernameOrEmailIsInUse(RegisterRequest registerRequest, ModelAndView modelAndView, boolean isInBindingCheck) {
+
+        modelAndView.addObject("passwordsMatch", userService.doPasswordsMatch(registerRequest));
+        getListOfTeamNames(modelAndView);
+
+        switch (userService.checkForTakenCredentials(registerRequest)){
+
+            case "Username":
+                modelAndView.addObject("takenUsername", true);
+                return modelAndView;
+
+            case "Email":
+                modelAndView.addObject("takenEmail", true);
+                return modelAndView;
+
+            case "Username Email":
+                modelAndView.addObject("takenEmail", true);
+                modelAndView.addObject("takenUsername", true);
+                return modelAndView;
+            default:
+                if(isInBindingCheck || !userService.doPasswordsMatch(registerRequest)){
+                    return modelAndView;
+                }
+                userService.register(registerRequest);
+                return new ModelAndView("redirect:/login");
+        }
+
+    }
+
+    public void getListOfTeamNames(ModelAndView modelAndView) {
+        List<String> teamNames = teamService.getAllTeamsNames();
+        Collections.sort(teamNames);
+        modelAndView.addObject("teamNames", teamNames);
     }
 
 

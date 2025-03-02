@@ -2,27 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MatchDay login</title>
-    <link rel="stylesheet" href="/css/index.css">
+    <title>MatchDay</title>
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 <div class="container">
-    <div class="left-panel">
-        <img src="/images/logo.png" alt="MatchDay Logo" class="logo">
-        <h1>MatchDay</h1>
-    </div>
-    <div class="right-panel">
-        <div class="login-form">
-            <h2>Welcome</h2>
-            <form th:action="@{/index}" th:method="POST" th:object="${loginRequest}">
-                <input type="text" placeholder="Username" class="input-field" th:field="*{username}">
-                <input type="text" placeholder="Password" class="input-field" th:field="*{password}">
-                <br>
-                <button type="submit" class="login-button">Login</button>
-                <p>or <a href="/register">Register</a> if you don’t have an account</p>
-            </form>
-        </div>
-    </div>
+  <div class="logo-container">
+    <img src="/images/logo.png" alt="MatchDay Logo" class="logo">
+  </div>
+  <h1>MatchDay</h1>
+  <p class="tagline">All the football information you need.</p>
+  <div class="button-container">
+    <a href="/login" class="button">Login</a>
+    <span>or</span>
+    <a href="/register" class="button">Register</a>
+  </div>
 </div>
 </body>
 </html>

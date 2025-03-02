@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MatchDay</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <img src="/images/logo.png" alt="MatchDay Logo" class="logo">
+        <h1>MatchDay</h1>
+    </div>
+    <div class="right-panel">
+        <div class="login-form">
+            <h2>Welcome back</h2>
+            <form th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
+                <label th:if="${!#fields.hasErrors('username')}">Username</label>
+                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-label"></label>
+                <br>
+                <input type="text" class="input-field" th:field="*{username}">
+                <br>
+                <label th:if="${!#fields.hasErrors('password')}">Password</label>
+                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-label"></label>
+                <br>
+                <input type="text" class="input-field" th:field="*{password}">
+                <br>
+                <label th:if="${wrongCredentials}" class="incorrect-credentials">Username or password incorrect</label>
+                <br>
+                <button type="submit" class="login-button">Login</button>
+                <p>or <a href="/register">Register</a> if you don’t have an account</p>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -16,7 +16,6 @@ body {
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-
 }
 
 .left-panel, .right-panel {
@@ -54,33 +53,12 @@ h1 {
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.register-form h2 {
-    color: white;
-    font-size: 40px;
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
-
-.form-grid {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0px;
-    column-gap: 10px;
-}
-
-.form-column {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 0px;
-}
-
 label {
     color: #a0e18b;
     font-size: 16px;
     font-family: 'Segoe UI', Arial, sans-serif;
     margin-bottom: 0px;
+    margin-right: 215px;
 }
 
 .error-label {
@@ -88,68 +66,38 @@ label {
     font-size: 16px;
     font-family: 'Segoe UI', Arial, sans-serif;
     margin-bottom: 0px;
+    margin-right: 45px;
 }
 
-.pfp-error-label{
+.incorrect-credentials{
     color: #f88e8e;
     font-size: 16px;
     font-family: 'Segoe UI', Arial, sans-serif;
     margin-bottom: 0px;
-    margin-left: 73px;
+    margin-right: 5px;
 }
 
-.pfp-label{
-    color: #a0e18b;
-    font-size: 16px;
+.login-form {
+    text-align: center;
+}
+
+.login-form h2 {
+    color: white;
+    font-size: 40px;
+    margin-bottom: 20px;
     font-family: 'Segoe UI', Arial, sans-serif;
-    margin-bottom: 0px;
-    margin-left: 73px;
 }
 
 .input-field {
     width: 267px;
     padding: 10px;
-    margin: 5px 0;
+    margin: 10px 0;
     border: none;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.9);
     font-size: 16px;
     outline: none;
     color: black;
-    appearance: none;
-    background-image: none;
-    cursor: text;
-}
-
-.profile-picture {
-    width: 570px;
-    padding: 10px;
-    margin: 5px 0;
-    margin-left: 73px;
-    border: none;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    font-size: 16px;
-    outline: none;
-    color: black;
-    appearance: none;
-    background-image: none;
-    cursor: text;
-}
-
-.select-field {
-    width: 283px;
-    padding: 10px;
-    margin: 5px 0;
-    border: none;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    font-size: 16px;
-    outline: none;
-    color: black;
-    appearance: none;
-    background-image: none;
-    cursor: pointer;
 }
 
 .input-field::placeholder {
@@ -157,43 +105,25 @@ label {
     opacity: 1;
 }
 
-.profile-picture::placeholder {
-    color: #888;
-    opacity: 1;
-}
-
-.select-field::placeholder {
-    color: #888;
-    opacity: 1;
-}
-
-select.select-field {
-    background: rgba(255, 255, 255, 0.9);
-    padding-right: 30px;
-    background-position: right 10px center;
-    background-repeat: no-repeat;
-}
-
-.or {
-    text-align: center;
+.login-form p {
     color: white;
     font-size: 15px;
     margin-top: 15px;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.register-form a {
+.login-form a {
     color: white;
     text-decoration: none;
     font-weight: 640;
     cursor: pointer;
 }
 
-.register-button {
-    width: 120px;
+.login-button {
+    text-align: center;
+    width: 30%;
     padding: 12px;
     margin: 10px 0;
-    margin-left: 318px;
     border: none;
     border-radius: 20px;
     background: #2E7D32;
@@ -204,7 +134,7 @@ select.select-field {
     transition: transform 0.3s ease;
 }
 
-.register-button:hover {
+.login-button:hover {
     transform: scale(1.1);
 }
 
@@ -230,24 +160,4 @@ select.select-field {
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-}
-
-select.input-field:after {
-    content: "▼";
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #888;
-}
-
-select.input-field::-ms-expand {
-    display: none;
-}
-
-p{
-    color: #ff3737;
-    font-size: 10px;
-    margin-top: 5px;
 }

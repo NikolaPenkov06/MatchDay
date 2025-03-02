@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MatchDay register</title>
+    <title>MatchDay</title>
     <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
@@ -17,34 +17,49 @@
             <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
                 <div class="form-grid">
                     <div class="form-column">
-                        <label>Username</label>
+                        <label th:if="${!#fields.hasErrors('username') && takenUsername != true}">Username</label>
+                        <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-label"></label>
+                        <label th:if="${takenUsername}" class="error-label">Username is already taken</label>
                         <input type="text" class="input-field" placeholder="e.g. FootballFan123" th:field="*{username}">
-                        <label>Email</label>
+                        <label th:if="${!#fields.hasErrors('email') && takenEmail != true}">Email</label>
+                        <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-label"></label>
+                        <label th:if="${takenEmail}" class="error-label">Email is already in use</label>
                         <input type="text" class="input-field" placeholder="e.g. gsmith1999@gmail.com" th:field="*{email}">
-                        <label>Password</label>
+                        <label th:if="${!#fields.hasErrors('password')}">Password</label>
+                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-label"></label>
                         <input type="text" class="input-field" placeholder="Password with min 6 symbols" th:field="*{password}">
-                        <label>Confirm password</label>
+                        <label th:if="${!#fields.hasErrors('confirmPassword') && passwordsMatch}">Confirm password</label>
+                        <label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error-label"></label>
+                        <label th:if="${!passwordsMatch}" class="error-label">Passwords do not match</label>
                         <input type="text" class="input-field" placeholder="Confirm your password" th:field="*{confirmPassword}">
+
                     </div>
                     <div class="form-column">
                         <label>First Name*</label>
                         <input type="text" class="input-field" placeholder="e.g. Gary" th:field="*{firstName}">
+
                         <label>Last Name*</label>
                         <input type="text" class="input-field" placeholder="e.g. Smith" th:field="*{lastName}">
-                        <label>Country</label>
+                        <label th:if="${!#fields.hasErrors('country')}">Country</label>
+                        <label th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="error-label"></label>
                         <select class="select-field" th:field="*{country}">
                             <option th:value="${country}" th:each="country : ${T(bg.softuni.matchday.user.model.Country).values()}" th:text="${#strings.capitalize(#strings.toLowerCase(country))}"></option>
                         </select>
-                        <label>Favorite Team</label>
-                        <select class="select-field" th:field="*{favouriteTeam}">
+
+                        <label>Favourite team</label>
+                        <select class="select-field" th:field="*{favouriteTeamName}">
                             <option th:each="team : ${teamNames}" th:value="${team}" th:text="${team}"></option>
                         </select>
+
                     </div>
                 </div>
-                <label class="pfp-label">Profile Picture*</label>
+                <label th:if="${!#fields.hasErrors('profilePicture')}" class="pfp-label">Profile picture*</label>
+                <label th:if="${#fields.hasErrors('profilePicture')}" th:errors="*{profilePicture}" class="pfp-error-label"></label>
+                <br>
                 <input type="text" class="profile-picture" placeholder="Paste a URL link of an image" th:field="*{profilePicture}">
+
                 <button type="submit" class="register-button">Register</button>
-                <p>or <a href="/">Login</a> if you already have an account</p>
+                <div class="or">or <a href="/login">Login</a> if you already have an account</div>
             </form>
         </div>
     </div>
