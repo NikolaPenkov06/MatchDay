@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchDay</title>
+    <link rel="stylesheet" th:href="@{/css/add-article.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a th:href="@{/home}">
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="MatchDay logo">
+            <h1>MatchDay</h1>
+        </div>
+    </a>
+    <nav class="admin-nav">
+        <ul>
+            <li><a th:href="@{/edit-roles}">Edit Roles</a></li>
+            <li><a th:href="@{/add-match}">Add Match</a></li>
+            <li><a th:href="@{/add-article}">Add Article</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <ul>
+            <li><a th:href="@{/articles}">Articles</a></li>
+            <li><a th:href="@{/league-tables-menu}">League Tables</a></li>
+            <li><a th:href="@{/matches-menu}">Matches</a></li>
+        </ul>
+    </nav>
+</header>
+
+<aside class="profile">
+    <img th:src="@{${user.profilePicture}}" alt="Profile Picture" class="profile-pic">
+    <h2 th:text="${user.firstName}">Nikola Penkov</h2>
+    <h2 th:text="${user.lastName}">Nikola Penkov</h2>
+    <p class="username" th:text="'@' + ${user.username}">@username</p>
+    <p class="email" th:text="${user.email}">moqtosmiprofil2006@gmail.com</p>
+    <p class="country" th:text="${user.country}">BULGARIA</p>
+    <div class="profile-buttons">
+        <a th:href="@{/}" class="logout">Log out</a>
+
+        <form th:action="@{/email-preference/{id}(id=${user.id})}"
+              method="post"
+              style="display:inline;">
+            <button type="submit"
+                    class="logout"
+                    th:text="${user.emailsEnabled} ? 'Disable Emails' : 'Enable Emails'">
+            </button>
+        </form>
+    </div>
+</aside>
+
+
+<aside class="fav-team">
+    <a th:href="@{/team/{id}(id=${user.favouriteTeam.id})}">
+        <img th:src="@{${user.favouriteTeam.logo}}" class="team-logo" alt="idk">
+    </a>
+
+    <h2 class="team-name">
+        <a th:href="@{/team/{id}(id=${user.favouriteTeam.id})}"
+           th:text="${user.favouriteTeam.name}">Inter</a>
+    </h2>
+    <p  class="league-position" th:text="${position} + ' in ' + ${user.favouriteTeam.league.name}">5th in Serie A</p>
+    <p  class="league-position" th:text="${user.favouriteTeam.points} + ' pts'">9 pts</p>
+    <p class="latest-match">Latest match</p>
+    <p  class="latest-match-text" th:text="${latestMatch}">3-0 vs Bologna</p>
+    <p class="manager">Manager</p>
+    <p  class="manager-text" th:text="${user.favouriteTeam.coachName}">Christian Chivu</p>
+</aside>
+
+<main class="content">
+
+    <section class="add-article-box">
+
+        <h2>Add article</h2>
+
+        <form th:action="@{/add-article}"
+              method="post"
+              th:object="${addArticleRequest}">
+
+            <label>Title</label>
+            <input type="text"
+                   placeholder="Add title…"
+                   th:field="*{title}"
+                   oninput="hideSuccess()" />
+
+            <p class="error"
+               th:if="${#fields.hasErrors('title')}"
+               th:errors="*{title}">
+            </p>
+
+            <label>Image</label>
+            <input type="text"
+                   placeholder="Paste URL here…"
+                   th:field="*{image}"
+                   oninput="hideSuccess()" />
+
+            <p class="error"
+               th:if="${#fields.hasErrors('image')}"
+               th:errors="*{image}">
+            </p>
+
+            <label>Content</label>
+            <textarea class="article-content"
+                      placeholder="Write the full article here..."
+                      th:field="*{content}"
+                      oninput="autoGrow(this); hideSuccess()"></textarea>
+
+            <p class="error"
+               th:if="${#fields.hasErrors('content')}"
+               th:errors="*{content}">
+            </p>
+
+            <!-- ACTIONS -->
+            <div class="add-article-actions">
+                <button type="submit">Add article</button>
+                <span id="articleSuccess"
+                      class="success"
+                      th:if="${articleAdded}">
+                Article added successfully
+            </span>
+            </div>
+
+        </form>
+
+    </section>
+
+    <script>
+        function autoGrow(el) {
+            el.style.height = "18vh";
+
+            if (el.scrollHeight > el.clientHeight) {
+                el.style.height = el.scrollHeight + "px";
+            }
+        }
+
+        function hideSuccess() {
+            const success = document.getElementById("articleSuccess");
+            if (success) {
+                success.style.display = "none";
+            }
+        }
+    </script>
+
+</main>
+
+</body>
+</html>

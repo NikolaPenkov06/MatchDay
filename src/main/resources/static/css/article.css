@@ -1,0 +1,426 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    color: white;
+    background: #f5f5f5;
+
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 9.5vh;
+    background: linear-gradient(180deg, #2f9e44, #4db748);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3vw;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    z-index: 1000;
+
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6vw;
+    object-fit: contain;
+}
+
+.logo img {
+    filter: drop-shadow(0 0.4vh 0.6vh rgba(0,0,0,0.4));
+    width: 3.2vw;
+    height: 6vh;
+}
+
+.navbar h1 {
+    font-size: 4vh;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar a:visited {
+    color: white;
+}
+
+.navbar a:hover {
+    color: white;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 3vw;
+    margin-right: 8vw;
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 2.5vh;
+    transition: transform 0.3s ease;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    display: inline-block;
+}
+
+.navbar li a:hover {
+    color: #c7e0bf;
+    transition: color 0.3s ease;
+}
+
+.navbar ul li {
+    position: relative;
+}
+
+.navbar ul li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -1.5vw;
+    top: 60%;
+    transform: translateY(-50%);
+    width: 0.1vw;
+    height: 4.7vh;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 1vh;
+}
+
+.profile {
+    position: fixed;
+    top: 12.5vh;
+    left: 1.3vw;
+    width: 16vw;
+    height: calc(100vh - 21vh);
+    background: linear-gradient(180deg, #3da34d, #5ec56a);
+    border-radius: 7vh;
+    text-align: center;
+    padding: 2.8vh 1vw;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+.profile-pic {
+    width: 20vh;
+    height: 20vh;
+    border-radius: 50%;
+    margin-top: 3vh;
+    filter: drop-shadow(0 0.4vh 0.6vh rgba(0,0,0,0.4));
+    object-fit: cover;
+}
+
+.profile p {
+
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.username{
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    font-size: 3vh;
+    color: #b6e3a8;
+    margin-bottom: 5vh !important;
+}
+
+.profile .email {
+    font-size: 2.2vh;
+    margin: 5vh 0 !important;
+}
+
+.profile .country {
+    font-size: 3vh;
+    margin: 5vh 0 8vh 0 !important;
+}
+
+.profile h2 {
+    font-weight: 400;
+    font-size: 4vh;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 2.7vh;
+    padding: 1vh 2vh;
+
+    background: #3e8a47;
+    color: white;
+    border: none;
+    border-radius: 2.5vh;
+
+    font-family: inherit;
+    font-size: 2vh;
+    font-weight: 400;
+    line-height: normal;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    transition: background 0.3s ease-in-out;
+
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.logout:hover {
+    background: #379541;
+}
+
+.profile-buttons form {
+    margin: 0;
+    margin-left: 0.8vw;
+}
+
+.profile-buttons .logout {
+    margin-top: 0;
+}
+
+.fav-team {
+    position: fixed;
+    top: 12.5vh;
+    right: 1.3vw;
+    width: 16vw;
+    height: calc(100vh - 21vh);
+    background: linear-gradient(180deg, #3da34d, #5ec56a);
+    border-radius: 7vh;
+    text-align: center;
+    padding: 2.8vh 1vw;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    overflow: hidden;
+}
+
+.team-logo {
+    width: 20vh;
+    height: 20vh;
+    margin-top: 3vh;
+    object-fit: contain;
+    filter: drop-shadow(0 0.4vh 0.6vh rgba(0,0,0,0.4));
+}
+
+.team-name{
+    font-weight: 400;
+    font-size: 4vh;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.league-position{
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    font-size: 3vh;
+}
+
+.latest-match{
+    color: #b6e3a8;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    font-size: 3vh;
+}
+
+.latest-match-text{
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    font-size: 3vh;
+}
+
+.manager{
+    color: #b6e3a8;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    font-size: 3vh;
+}
+
+.manager-text{
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+    font-size: 3vh;
+}
+
+/* CONTENT AREA */
+.content {
+    position: relative;
+    top: 4vh;
+    margin: 8.5vh 20vw 4vh 21.3vw;
+    min-height: calc(100vh - 9vh);
+    overflow-y: visible;
+    overflow-x: hidden;
+    padding-right: 2.5vh;
+}
+
+/* ARTICLE */
+.article-box {
+    background: linear-gradient(180deg, #3da34d, #5ec56a);
+    border-radius: 7vh;
+    padding: 0.5vh 4vw;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    margin-bottom: 5vh;
+}
+
+.article-title {
+    font-size: 4.5vh;
+    font-weight: 600;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.5);
+}
+
+.article-image {
+    width: 100%;
+    height: 60vh;
+    border-radius: 5vh;
+    object-fit: cover;
+    margin-bottom: 2.5vh;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+}
+
+.article-date {
+    font-size: 2.2vh;
+    margin-bottom: 3vh;
+    color: #d8f3cf;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.article-text {
+    font-size: 2.4vh;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.article-author {
+    margin-top: 3vh;
+    font-size: 2.2vh;
+    text-align: right;
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.4);
+}
+
+.add-comment {
+    display: flex;
+    gap: 1.5vw;
+    background: linear-gradient(180deg, #3da34d, #5ec56a);
+    border-radius: 6vh;
+    padding: 2.5vh 3vw 7vh 3vw;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    margin-bottom: 4vh;
+}
+
+.comment-input {
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+    border: none;
+    border-radius: 4vh;
+    padding: 1.5vh 2vh 2vh 2vh;
+    font-size: 2.3vh;
+    outline: none;
+    font-family: "Segoe UI", sans-serif;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+}
+
+.comment {
+    display: flex;
+    gap: 1.5vw;
+    background: linear-gradient(180deg, #3da34d, #5ec56a);
+    border-radius: 6vh;
+    padding: 2.5vh 3vw;
+    margin-bottom: 3vh;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+}
+
+.comment-pic {
+    width: 3.7vw;
+    height: 3.7vw;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-header {
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: space-between;
+    font-size: 2.2vh;
+    margin-bottom: 1vh;
+}
+
+.comment-name{
+    top: 3vh;
+    font-weight: 650;
+}
+
+.comment-text {
+    text-shadow: 0.2vh 0.2vh 0.4vh rgba(0,0,0,0.5);
+    font-size: 2.3vh;
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+a:visited {
+    color: white !important;
+}
+
+a:hover {
+    transition: color 0.3s ease;
+    color: #c7e0bf !important;
+}
+
+.comment-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.post-btn {
+    position: absolute;
+    right: 1.2vw;
+    bottom: -5.2vh;
+    background: #3e8a47;
+    color: white;
+    border: none;
+    font-size: 2vh;
+    padding: 0.9vh 2.2vh;
+    border-radius: 2.5vh;
+    cursor: pointer;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    transition: background 0.3s ease-in-out;
+}
+
+.post-btn:hover {
+    background: #379541;
+}
+
+.delete-article-form {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -2vh;
+}
+
+.delete-btn {
+    background: #3e8a47;
+    margin-top: -5vh;
+    color: white;
+    border: none;
+    font-size: 2vh;
+    padding: 1vh 2.2vh;
+    border-radius: 2.5vh;
+    cursor: pointer;
+    box-shadow: 0.4vw 0 1.5vw rgba(0,0,0,0.25);
+    transition: background 0.3s ease-in-out;
+}
+
+.delete-btn:hover {
+    background: #379541;
+}
+
+.admin-nav{
+    margin-left: -13vw;
+}
+

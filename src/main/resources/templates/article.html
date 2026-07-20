@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MatchDay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/article.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/home}">
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="MatchDay logo">
+            <h1>MatchDay</h1>
+        </div>
+    </a>
+    <nav class="admin-nav" th:if="${user.role.name() == 'ADMIN'}">
+        <ul>
+            <li><a th:href="@{/edit-roles}">Edit Roles</a></li>
+            <li><a th:href="@{/add-match}">Add Match</a></li>
+            <li><a th:href="@{/add-article}">Add Article</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <ul>
+            <li><a th:href="@{/articles}">Articles</a></li>
+            <li><a th:href="@{/league-tables-menu}">League Tables</a></li>
+            <li><a th:href="@{/matches-menu}">Matches</a></li>
+        </ul>
+    </nav>
+</header>
+
+<aside class="profile">
+    <img th:src="@{${user.profilePicture}}" alt="Profile Picture" class="profile-pic">
+    <h2 th:text="${user.firstName}">Nikola Penkov</h2>
+    <h2 th:text="${user.lastName}">Nikola Penkov</h2>
+    <p class="username" th:text="'@' + ${user.username}">@username</p>
+    <p class="email" th:text="${user.email}">moqtosmiprofil2006@gmail.com</p>
+    <p class="country" th:text="${user.country}">BULGARIA</p>
+    <div class="profile-buttons">
+        <a th:href="@{/}" class="logout">Log out</a>
+
+        <form th:action="@{/email-preference/{id}(id=${user.id})}"
+              method="post"
+              style="display:inline;">
+            <button type="submit"
+                    class="logout"
+                    th:text="${user.emailsEnabled} ? 'Disable Emails' : 'Enable Emails'">
+            </button>
+        </form>
+    </div>
+</aside>
+
+<aside class="fav-team">
+    <img th:src="@{${user.favouriteTeam.logo}}" class="team-logo">
+    <h2 class="team-name" th:text="${user.favouriteTeam.name}"></h2>
+    <p class="league-position" th:text="${position} + ' in ' + ${user.favouriteTeam.league.name}"></p>
+    <p class="league-position" th:text="${user.favouriteTeam.points} + ' pts'"></p>
+    <p class="latest-match">Latest match</p>
+    <p class="latest-match-text" th:text="${latestMatch}"></p>
+    <p class="manager">Manager</p>
+    <p class="manager-text" th:text="${user.favouriteTeam.coachName}"></p>
+</aside>
+
+<main class="content">
+
+    <section class="article-box">
+
+        <h1 class="article-title" th:text="${article.title}">Article title</h1>
+        <img class="article-image" th:src="@{${article.picture}}" alt="Article image">
+        <p class="article-date" th:text="${#temporals.format(article.publishDate,'dd.MM.yyyy')}">13.09.2025</p>
+        <form class="delete-article-form" th:action="@{/article/{id}(id=${article.id})}" th:if="${user.role.name() == 'ADMIN'}" method="post">
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button type="submit" class="delete-btn">Delete article</button>
+        </form>
+        <div class="article-text" th:text="${article.content}">Article content goes here</div>
+        <p class="article-author" th:text="'Author: ' + ${article.author}">Author</p>
+
+    </section>
+
+    <section class="add-comment">
+
+        <img class="comment-pic" th:src="@{${user.profilePicture}}">
+
+        <form class="comment-input-wrapper" th:action="@{/articles/{id}/comments(id=${article.id})}" th:method="POST" th:object="${addCommentRequest}">
+
+        <textarea class="comment-input" th:field="*{content}" placeholder="Add a comment..." rows="1" oninput="autoResize(this)"></textarea>
+
+            <input type="hidden" th:field="*{articleId}" th:value="${article.id}"/>
+
+            <button type="submit" class="post-btn">Post</button>
+
+        </form>
+    </section>
+
+    <script>
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        }
+
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.comment-input').forEach(autoResize);
+        });
+    </script>
+
+    <section class="comments">
+        <div class="comment" th:each="comment : ${comments}">
+
+            <img class="comment-pic" th:src="@{${comment.commenter.profilePicture}}">
+
+            <div class="comment-body">
+                <div class="comment-header">
+                    <span class="comment-name" th:text="${comment.commenter.firstName} + ' ' + ${comment.commenter.lastName}"></span>
+                    <span class="comment-date" th:text="${#temporals.format(comment.commentDate,'dd.MM.yyyy HH:mm')}"></span>
+                </div>
+
+                <p class="comment-text" th:text="${comment.content}"></p>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

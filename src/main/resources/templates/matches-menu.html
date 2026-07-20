@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchDay</title>
+    <link rel="stylesheet" th:href="@{/css/league-tables.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/home}">
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="MatchDay logo">
+            <h1>MatchDay</h1>
+        </div>
+    </a>
+    <nav class="admin-nav" th:if="${user.role.name() == 'ADMIN'}">
+        <ul>
+            <li><a th:href="@{/edit-roles}">Edit Roles</a></li>
+            <li><a th:href="@{/add-match}">Add Match</a></li>
+            <li><a th:href="@{/add-article}">Add Article</a></li>
+        </ul>
+    </nav>
+    <nav class="user-nav">
+        <ul>
+            <li><a th:href="@{/articles}">Articles</a></li>
+            <li><a th:href="@{/league-tables-menu}">League Tables</a></li>
+            <li><a th:href="@{/matches-menu}">Matches</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="leagues">
+    <div class="leagues-grid">
+        <a th:href="@{/matches/{id}(id=${bundesliga.id})}" class="league">
+            <img th:src="@{${bundesliga.logo}}" alt="Bundesliga" class="bundesliga">
+        </a>
+        <a th:href="@{/matches/{id}(id=${ligue1.id})}" class="league">
+            <img th:src="@{${ligue1.logo}}" alt="Ligue 1" class="ligue-1">
+        </a>
+        <a th:href="@{/matches/{id}(id=${laLiga.id})}" class="league">
+            <img th:src="@{${laLiga.logo}}" alt="LaLiga" class="la-liga">
+        </a>
+        <a th:href="@{/matches/{id}(id=${prem.id})}" class="league">
+            <img th:src="@{${prem.logo}}" alt="Premier League" class="prem">
+        </a>
+        <a th:href="@{/matches/{id}(id=${serieA.id})}" class="league">
+            <img th:src="@{${serieA.logo}}" alt="Serie A" class="serie-a">
+        </a>
+    </div>
+</main>
+</body>
+</html>

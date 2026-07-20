@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchDay</title>
+    <link rel="stylesheet" th:href="@{/css/game.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+  <a th:href="@{/home}">
+    <div class="logo">
+      <img th:src="@{/images/logo.png}" alt="MatchDay logo">
+      <h1>MatchDay</h1>
+    </div>
+  </a>
+  <nav class="admin-nav" th:if="${user.role.name() == 'ADMIN'}">
+    <ul>
+      <li><a th:href="@{/edit-roles}">Edit Roles</a></li>
+      <li><a th:href="@{/add-match}">Add Match</a></li>
+      <li><a th:href="@{/add-article}">Add Article</a></li>
+    </ul>
+  </nav>
+  <nav>
+    <ul>
+      <li><a th:href="@{/articles}">Articles</a></li>
+      <li><a th:href="@{/league-tables-menu}">League Tables</a></li>
+      <li><a th:href="@{/matches-menu}">Matches</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<aside class="profile">
+  <img th:src="@{${user.profilePicture}}" alt="Profile Picture" class="profile-pic">
+  <h2 th:text="${user.firstName}">Nikola Penkov</h2>
+  <h2 th:text="${user.lastName}">Nikola Penkov</h2>
+  <p class="username" th:text="'@' + ${user.username}">@username</p>
+  <p class="email" th:text="${user.email}">moqtosmiprofil2006@gmail.com</p>
+  <p class="country" th:text="${user.country}">BULGARIA</p>
+  <div class="profile-buttons">
+    <a th:href="@{/}" class="logout">Log out</a>
+
+    <form th:action="@{/email-preference/{id}(id=${user.id})}"
+          method="post"
+          style="display:inline;">
+      <button type="submit"
+              class="logout"
+              th:text="${user.emailsEnabled} ? 'Disable Emails' : 'Enable Emails'">
+      </button>
+    </form>
+  </div>
+</aside>
+
+
+<!-- RIGHT FAV TEAM -->
+<aside class="fav-team">
+  <a th:href="@{/team/{id}(id=${team.id})}">
+    <img th:src="@{${team.logo}}" class="team-logo">
+  </a>
+
+  <h2 class="team-name">
+    <a th:href="@{/team/{id}(id=${team.id})}"
+       th:text="${team.name}">Inter</a>
+  </h2>
+
+  <p class="league-position" th:text="${position} + ' in ' + ${team.league.name}"></p>
+  <p class="league-position" th:text="${team.points} + ' pts'"></p>
+
+  <p class="latest-match">Latest match</p>
+  <p class="latest-match-text" th:text="${latestMatch}"></p>
+
+  <p class="manager">Manager</p>
+  <p class="manager-text" th:text="${team.coachName}"></p>
+</aside>
+
+
+<main class="content">
+
+  <section class="match-box">
+
+    <div class="match-header">
+      <h2 class="match-title"
+          th:text="${game.homeTeam.name} + ' vs ' + ${game.awayTeam.name}">
+        PSG vs Strasbourg
+      </h2>
+
+      <p class="match-date"
+         th:text="${#temporals.format(game.startTime, 'dd.MM.yyyy')}">
+        29.11.2025
+      </p>
+    </div>
+
+    <div class="match-main">
+      <a th:href="@{/team/{id}(id=${game.homeTeam.id})}">
+      <img class="team-logo-big" th:src="@{${game.homeTeam.logo}}">
+      </a>
+        <h1 class="score"
+          th:text="${game.homeGoals} + ' - ' + ${game.awayGoals}">
+        3 - 1
+      </h1>
+      <a th:href="@{/team/{id}(id=${game.awayTeam.id})}">
+        <img class="team-logo-big" th:src="@{${game.awayTeam.logo}}">
+      </a>
+    </div>
+
+    <div class="game-info">
+    <p class="stadium-name" th:text="${game.homeTeam.stadiumName}">
+      Parc Des Princes
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="stats-grid">
+
+      <div class="stat-row">
+        <span th:text="${game.homePossessionPercentage} + '%'">83%</span>
+        <span class="stat-name">Possession</span>
+        <span th:text="${game.awayPossessionPercentage} + '%'">17%</span>
+      </div>
+
+      <div class="stat-row">
+        <span th:text="${game.homeShotsOnTarget + game.homeShotsOffTarget}">14</span>
+        <span class="stat-name">Shots</span>
+        <span th:text="${game.awayShotsOnTarget + game.awayShotsOffTarget}">6</span>
+      </div>
+
+      <div class="stat-row">
+        <span th:text="${game.homeShotsOnTarget}">6</span>
+        <span class="stat-name">Shots on target</span>
+        <span th:text="${game.awayShotsOnTarget}">2</span>
+      </div>
+
+      <div class="stat-row">
+        <span th:text="${game.homeCorners}">7</span>
+        <span class="stat-name">Corners</span>
+        <span th:text="${game.awayCorners}">3</span>
+      </div>
+
+      <div class="stat-row">
+        <span th:text="${game.homeFouls}">5</span>
+        <span class="fouls">Fouls</span>
+        <span th:text="${game.awayFouls}">6</span>
+      </div>
+
+      <div class="stat-row">
+        <span th:text="${game.homeOffsides}">3</span>
+        <span class="stat-name">Offsides</span>
+        <span th:text="${game.awayOffsides}">3</span>
+      </div>
+
+    </div>
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>

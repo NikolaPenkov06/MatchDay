@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchDay</title>
+    <link rel="stylesheet" th:href="@{/css/matches.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/home}">
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="MatchDay logo">
+            <h1>MatchDay</h1>
+        </div>
+    </a>
+    <nav class="admin-nav" th:if="${user.role.name() == 'ADMIN'}">
+        <ul>
+            <li><a th:href="@{/edit-roles}">Edit Roles</a></li>
+            <li><a th:href="@{/add-match}">Add Match</a></li>
+            <li><a th:href="@{/add-article}">Add Article</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <ul>
+            <li><a th:href="@{/articles}">Articles</a></li>
+            <li><a th:href="@{/league-tables-menu}">League Tables</a></li>
+            <li><a th:href="@{/matches-menu}">Matches</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<aside class="profile">
+    <img th:src="@{${user.profilePicture}}" alt="Profile Picture" class="profile-pic">
+    <h2 th:text="${user.firstName}">Nikola Penkov</h2>
+    <h2 th:text="${user.lastName}">Nikola Penkov</h2>
+    <p class="username" th:text="'@' + ${user.username}">@username</p>
+    <p class="email" th:text="${user.email}">moqtosmiprofil2006@gmail.com</p>
+    <p class="country" th:text="${user.country}">BULGARIA</p>
+    <div class="profile-buttons">
+        <a th:href="@{/}" class="logout">Log out</a>
+
+        <form th:action="@{/email-preference/{id}(id=${user.id})}"
+              method="post"
+              style="display:inline;">
+            <button type="submit"
+                    class="logout"
+                    th:text="${user.emailsEnabled} ? 'Disable Emails' : 'Enable Emails'">
+            </button>
+        </form>
+    </div>
+</aside>
+
+
+<aside class="fav-team">
+    <a th:href="@{/team/{id}(id=${user.favouriteTeam.id})}">
+        <img th:src="@{${user.favouriteTeam.logo}}" class="team-logo" alt="idk">
+    </a>
+
+    <h2 class="team-name">
+        <a th:href="@{/team/{id}(id=${user.favouriteTeam.id})}"
+           th:text="${user.favouriteTeam.name}">Inter</a>
+    </h2>
+    <p  class="league-position" th:text="${position} + ' in ' + ${user.favouriteTeam.league.name}">5th in Serie A</p>
+    <p  class="league-position" th:text="${user.favouriteTeam.points} + ' pts'">9 pts</p>
+    <p class="latest-match">Latest match</p>
+    <p  class="latest-match-text" th:text="${latestMatch}">3-0 vs Bologna</p>
+    <p class="manager">Manager</p>
+    <p  class="manager-text" th:text="${user.favouriteTeam.coachName}">Christian Chivu</p>
+</aside>
+
+
+<main class="content">
+    <section class="latest-matches">
+        <div class="matches-header-row">
+            <h2 class="matches-header">Latest matches in <span th:text="${league.name}">Serie A</span></h2>
+            <a th:href="@{/all-latest-matches/league/{id}(id=${league.id})}" class="see-all">See all</a>
+        </div>
+        <div class="match" th:each="match : ${latestMatches}">
+            <div class="date" th:text="${#temporals.format(match.startTime, 'dd.MM')}">01.10</div>
+
+            <div class="home">
+                <a th:href="@{/team/{id}(id=${match.homeTeam.id})}">
+                    <span th:text="${match.homeTeam.name}"></span>
+                </a>
+            </div>
+
+            <div class="logo">
+                <img th:src="@{${match.homeTeam.logo}}">
+            </div>
+
+            <div class="score">
+                <a th:href="@{/game/{id}(id=${match.id})}"
+                   th:text="${match.homeGoals} + ' - ' + ${match.awayGoals}">
+                    2 - 1
+                </a>
+            </div>
+
+            <div class="logo">
+                <img th:src="@{${match.awayTeam.logo}}">
+            </div>
+
+            <div class="away">
+                <a th:href="@{/team/{id}(id=${match.awayTeam.id})}">
+                    <span th:text="${match.awayTeam.name}"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="upcoming-matches">
+        <div class="matches-header-row">
+            <h2 class="matches-header">Upcoming matches in <span th:text="${league.name}">Serie A</span></h2>
+            <a th:href="@{/all-upcoming-matches/league/{id}(id=${league.id})}" class="see-all">See all</a>
+        </div>
+        <div class="match" th:each="match : ${upcomingMatches}">
+            <div class="date" th:text="${#temporals.format(match.startTime, 'dd.MM')}">01.10</div>
+
+            <div class="home">
+                <a th:href="@{/team/{id}(id=${match.homeTeam.id})}">
+                    <span th:text="${match.homeTeam.name}"></span>
+                </a>
+            </div>
+
+            <div class="logo">
+                <img th:src="@{${match.homeTeam.logo}}">
+            </div>
+
+            <div class="score">-</div>
+
+            <div class="logo">
+                <img th:src="@{${match.awayTeam.logo}}">
+            </div>
+
+            <div class="away">
+                <a th:href="@{/team/{id}(id=${match.awayTeam.id})}">
+                    <span th:text="${match.awayTeam.name}"></span>
+                </a>
+            </div>
+
+            <div class="time"
+                 th:text="${#temporals.format(match.startTime, 'HH:mm')}">20:30</div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

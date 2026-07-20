@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(45deg, #2E7D32, #5cca60);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+    padding: 2vh;
+    width: 80%;
+    max-width: 60vh;
+}
+
+
+.logo {
+    width: 22vw;
+    height: 42vh;
+
+}
+
+h1 {
+    color: white;
+    font-size: 11vh;
+    font-weight: bold;
+    margin: 1vh 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.tagline {
+    color: white;
+    font-size: 4.4vh;
+    margin: 1.1vh 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.button-container {
+    margin-top: 4vh;
+    display: flex;
+    justify-content: center;
+    gap: 1.5vw;
+    align-items: center;
+}
+
+.button {
+    width: 5vw;
+    padding: 1.7vh;
+    margin: 1vh 0;
+    border: none;
+    border-radius: 3vh;
+    background: #2E7D32;
+    color: white;
+    font-size: 2.2vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
+
+.button-container span {
+    color: white;
+    font-size: 2.2vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}

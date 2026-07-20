@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MatchDay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/edit-roles.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <a th:href="@{/home}">
+        <div class="logo">
+            <img th:src="@{/images/logo.png}" alt="MatchDay logo">
+            <h1>MatchDay</h1>
+        </div>
+    </a>
+    <nav class="admin-nav">
+        <ul>
+            <li><a th:href="@{/edit-roles}">Edit Roles</a></li>
+            <li><a th:href="@{/add-match}">Add Match</a></li>
+            <li><a th:href="@{/add-article}">Add Article</a></li>
+        </ul>
+    </nav>
+    <nav>
+        <ul>
+            <li><a th:href="@{/articles}">Articles</a></li>
+            <li><a th:href="@{/league-tables-menu}">League Tables</a></li>
+            <li><a th:href="@{/matches-menu}">Matches</a></li>
+        </ul>
+    </nav>
+</header>
+
+<aside class="profile">
+    <img th:src="@{${user.profilePicture}}" alt="Profile Picture" class="profile-pic">
+    <h2 th:text="${user.firstName}">Nikola Penkov</h2>
+    <h2 th:text="${user.lastName}">Nikola Penkov</h2>
+    <p class="username" th:text="'@' + ${user.username}">@username</p>
+    <p class="email" th:text="${user.email}">moqtosmiprofil2006@gmail.com</p>
+    <p class="country" th:text="${user.country}">BULGARIA</p>
+    <div class="profile-buttons">
+        <a th:href="@{/}" class="logout">Log out</a>
+
+        <form th:action="@{/email-preference/{id}(id=${user.id})}"
+              method="post"
+              style="display:inline;">
+            <button type="submit"
+                    class="logout"
+                    th:text="${user.emailsEnabled} ? 'Disable Emails' : 'Enable Emails'">
+            </button>
+        </form>
+    </div>
+</aside>
+
+<aside class="fav-team">
+    <img th:src="@{${user.favouriteTeam.logo}}" class="team-logo">
+    <h2 class="team-name" th:text="${user.favouriteTeam.name}"></h2>
+    <p class="league-position" th:text="${position} + ' in ' + ${user.favouriteTeam.league.name}"></p>
+    <p class="league-position" th:text="${user.favouriteTeam.points} + ' pts'"></p>
+    <p class="latest-match">Latest match</p>
+    <p class="latest-match-text" th:text="${latestMatch}"></p>
+    <p class="manager">Manager</p>
+    <p class="manager-text" th:text="${user.favouriteTeam.coachName}"></p>
+</aside>
+
+<main class="content">
+    <section class="users-box">
+
+        <h2 class="users-title">Users</h2>
+
+        <div class="users-list">
+
+            <div class="user-row" th:each="u : ${users}">
+
+                <img class="user-avatar" th:src="@{${u.profilePicture}}" alt="User avatar">
+
+                <div class="user-info">
+                    <span class="user-name" th:text="${u.firstName} + ' ' + ${u.lastName}">John Doe</span>
+
+                    <span class="user-username" th:text="'@' + ${u.username}">@johndoe</span>
+
+                    <span class="user-role" th:if="${u.role == T(bg.softuni.matchday.user.model.Role).ADMIN}">Admin</span>
+                </div>
+
+                <div class="user-action">
+
+                    <form th:if="${u.role == T(bg.softuni.matchday.user.model.Role).ADMIN}" th:action="@{/edit-roles/remove/{id}(id=${u.id})}" method="post">
+                        <button type="submit" class="role-btn">Remove admin</button>
+                    </form>
+
+                    <form th:if="${u.role != T(bg.softuni.matchday.user.model.Role).ADMIN}" th:action="@{/edit-roles/make/{id}(id=${u.id})}" method="post">
+                        <button type="submit" class="role-btn">Make admin</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+</main>
+
+
+</body>
+</html>

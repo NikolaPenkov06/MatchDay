@@ -1,0 +1,256 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(45deg, #2E7D32, #4CAF50);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    height: 60%;
+    border-radius: 2vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.left-panel {
+    background: linear-gradient(45deg, #2E7D32, #4CAF50);
+}
+
+.right-panel {
+    background: linear-gradient(135deg, #2E7D32, #4CAF50);
+}
+
+.logo {
+    width: 17vw;
+    height: 33vh;
+    position: absolute;
+    top: 7vh;
+    left: 12vw;
+}
+
+h1 {
+    color: white;
+    font-size: 10.5vh;
+    font-weight: bold;
+    margin: 0;
+    position: absolute;
+    top: 39vh;
+    left: 7.5vw;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.register-form h2 {
+    color: white;
+    font-size: 5vh;
+    text-align: center;
+    margin-top: 0vh;
+    margin-bottom: 0.5vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.form-grid {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0vh;
+    margin-left: 2.3vw;
+    column-gap: 0vw;
+}
+
+.form-column {
+    width: 17vw;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0vh;
+}
+
+label {
+    color: #a0e18b;
+    font-size: 1.9vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0vh;
+}
+
+.error-label {
+    color: #f88e8e;
+    font-size: 1.9vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0vh;
+}
+
+.pfp-error-label{
+    color: #f88e8e;
+    font-size: 1.9vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0vh;
+    margin-left: 73px;
+}
+
+.pfp-label{
+    color: #a0e18b;
+    font-size: 1.9vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0vh;
+    margin-left: 4.3vw;
+}
+
+.input-field {
+    width: 15vw;
+    padding: 1vh;
+    margin: 0.7vh 0;
+    border: none;
+    border-radius: 3vh;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1.9vh;
+    outline: none;
+    color: black;
+    appearance: none;
+    background-image: none;
+    cursor: text;
+}
+
+.profile-picture {
+    width: 31.9vw;
+    padding: 1vh;
+    margin: 0.5vh 0;
+    margin-left: 4.3vw;
+    border: none;
+    border-radius: 3vh;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1.9vh;
+    outline: none;
+    color: black;
+    appearance: none;
+    background-image: none;
+    cursor: text;
+}
+
+.select-field {
+    width: 16vw;
+    padding: 1vh;
+    margin: 0.7vh 0;
+    border: none;
+    border-radius: 3vh;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1.9vh;
+    outline: none;
+    color: black;
+    appearance: none;
+    background-image: none;
+    cursor: pointer;
+}
+
+.input-field::placeholder {
+    color: #888;
+    opacity: 1;
+}
+
+.profile-picture::placeholder {
+    color: #888;
+    opacity: 1;
+}
+
+.select-field::placeholder {
+    color: #888;
+    opacity: 1;
+}
+
+select.select-field {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1vh;
+    padding-right: 2vw;
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+}
+
+.or {
+    text-align: center;
+    color: white;
+    font-size: 1.9vh;
+    margin-top: 0vh;
+    margin-left: 1.5vw;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.register-form a {
+    color: white;
+    text-decoration: none;
+    font-weight: 640;
+    cursor: pointer;
+}
+
+.register-button {
+    width: 5vw;
+    padding: 1vh;
+    margin: 1vh 0;
+    margin-left: 18vw;
+    border: none;
+    border-radius: 3vh;
+    background: #2E7D32;
+    color: white;
+    font-size: 2vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.register-button:hover {
+    transform: scale(1.1);
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    width: 0.1vw;
+    height: 100%;
+    background: white;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    width: 6.5vw;
+    height: 13vh;
+    border: 0.15vw solid white;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+select.input-field:after {
+    content: "▼";
+    position: absolute;
+    right: 0.5vw;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #888;
+}
+
+select.input-field::-ms-expand {
+    display: none;
+}
+
+p{
+    color: white;
+    font-size: 1vh;
+    margin-top: 0.5vh;
+}
