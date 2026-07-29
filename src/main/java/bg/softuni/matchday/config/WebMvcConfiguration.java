@@ -48,6 +48,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                         .logoutSuccessUrl("/")
+                )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request, response, ex) -> {
+                            response.setStatus(404);
+                            request.getRequestDispatcher("/not-found").forward(request, response);
+                        })
                 );
 
         return http.build();

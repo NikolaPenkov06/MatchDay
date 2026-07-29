@@ -17,6 +17,7 @@
             <form th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
                 <label th:if="${!#fields.hasErrors('username')}">Username</label>
                 <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-label"></label>
+                <label th:text="${userNotFoundMessage}" class="error-label"></label>
                 <br>
                 <input type="text" class="input-field" th:field="*{username}">
                 <br>

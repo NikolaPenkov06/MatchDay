@@ -1,6 +1,7 @@
 package bg.softuni.matchday.user.service;
 
 import bg.softuni.matchday.email.service.EmailService;
+import bg.softuni.matchday.exception.UserDoesNotExistException;
 import bg.softuni.matchday.league.model.League;
 import bg.softuni.matchday.team.model.Team;
 import bg.softuni.matchday.team.service.TeamService;
@@ -39,7 +40,7 @@ public class UserService {
     public User login(LoginRequest loginRequest) {
         Optional<User> userOptional = userRepository.findByUsername(loginRequest.getUsername());
         if (userOptional.isEmpty()) {
-            return null;
+            throw new UserDoesNotExistException();
         }
 
         User user = userOptional.get();
