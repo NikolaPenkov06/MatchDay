@@ -46,11 +46,13 @@ public class ArticleService {
     }
 
     public List<Article> getLimitedArticles() {
-        if(getAllArticles().size() > 4){
-            return getAllArticles().subList(0, 4);
+        List<Article> articles = getAllArticles();
+
+        if (articles.size() > 4) {
+            return articles.subList(0, 4);
         }
 
-        return getAllArticles();
+        return articles;
     }
 
     public Article getById(UUID id) {

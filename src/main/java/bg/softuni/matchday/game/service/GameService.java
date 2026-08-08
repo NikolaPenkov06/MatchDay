@@ -107,97 +107,108 @@ public class GameService {
 
         for (Game game : gamesToProcess) {
 
-            Level homeLevel = game.getHomeTeam().getLevel();
-            Level awayLevel = game.getAwayTeam().getLevel();
+            decideMatchup(game);
 
-            switch (homeLevel) {
-                case BAD:
-                    switch (awayLevel) {
-                        case BAD:
-                            sameLevelGame(game);
-                            break;
-                        case MEDIUM:
-                            badAgainstMedium(game);
-                            break;
-                        case GOOD:
-                            badAgainstGood(game);
-                            break;
-                    }
-                    break;
-                case MEDIUM:
-                    switch (awayLevel) {
-                        case BAD:
-                            badAgainstMedium(game);
-                            swapHomeAway(game);
-                            break;
-                        case MEDIUM:
-                            sameLevelGame(game);
-                            break;
-                        case GOOD:
-                            mediumAgainstGood(game);
-                            break;
-                    }
-                    break;
-                case GOOD:
-                    switch (awayLevel) {
-                        case BAD:
-                            badAgainstGood(game);
-                            swapHomeAway(game);
-                            break;
-                        case MEDIUM:
-                            mediumAgainstGood(game);
-                            swapHomeAway(game);
-                            break;
-                        case GOOD:
-                            derby(game);
-                            break;
-                    }
-                    break;
-            }
-
-            if (game.getHomeGoals() > game.getAwayGoals()) {
-
-                game.getHomeTeam().setWins(game.getHomeTeam().getWins() + 1);
-                game.getAwayTeam().setLosses(game.getAwayTeam().getLosses() + 1);
-                game.getHomeTeam().setPoints(game.getHomeTeam().getPoints() + 3);
-
-            } else if (game.getAwayGoals() > game.getHomeGoals()) {
-
-                game.getAwayTeam().setWins(game.getAwayTeam().getWins() + 1);
-                game.getHomeTeam().setLosses(game.getHomeTeam().getLosses() + 1);
-                game.getAwayTeam().setPoints(game.getAwayTeam().getPoints() + 3);
-
-            } else {
-
-                game.getAwayTeam().setDraws(game.getAwayTeam().getDraws() + 1);
-                game.getHomeTeam().setDraws(game.getHomeTeam().getDraws() + 1);
-                game.getAwayTeam().setPoints(game.getAwayTeam().getPoints() + 1);
-                game.getHomeTeam().setPoints(game.getHomeTeam().getPoints() + 1);
-
-            }
-
-            game.getHomeTeam().setMatchesPlayed(game.getHomeTeam().getMatchesPlayed() + 1);
-            game.getAwayTeam().setMatchesPlayed(game.getAwayTeam().getMatchesPlayed() + 1);
-
-            game.getHomeTeam().setGoalsAgainst(game.getHomeTeam().getGoalsAgainst() + game.getAwayGoals());
-            game.getHomeTeam().setGoalsFor(game.getHomeTeam().getGoalsFor() + game.getHomeGoals());
-
-            game.getAwayTeam().setGoalsAgainst(game.getAwayTeam().getGoalsAgainst() + game.getHomeGoals());
-            game.getAwayTeam().setGoalsFor(game.getAwayTeam().getGoalsFor() + game.getAwayGoals());
+            updateTable(game);
 
             teamService.save(game.getHomeTeam());
             teamService.save(game.getAwayTeam());
 
-            for (User user : users){
-                if((game.getHomeTeam().equals(user.getFavouriteTeam()) || game.getAwayTeam().equals(user.getFavouriteTeam())) && user.isEmailsEnabled()){
-                    emailService.sendEmail(user.getId(), user.getEmail(), getSubject(game, user), getBody(game, user));
-                }
-            }
+            notifyUsers(game, users);
         }
 
         gameRepository.saveAll(gamesToProcess);
 
+    }
 
+    private void notifyUsers(Game game, List<User> users) {
+        for (User user : users){
+            if((game.getHomeTeam().equals(user.getFavouriteTeam()) || game.getAwayTeam().equals(user.getFavouriteTeam())) && user.isEmailsEnabled()){
+                emailService.sendEmail(user.getId(), user.getEmail(), getSubject(game, user), getBody(game, user));
+            }
+        }
+    }
+
+    private void updateTable(Game game) {
+        if (game.getHomeGoals() > game.getAwayGoals()) {
+
+            game.getHomeTeam().setWins(game.getHomeTeam().getWins() + 1);
+            game.getAwayTeam().setLosses(game.getAwayTeam().getLosses() + 1);
+            game.getHomeTeam().setPoints(game.getHomeTeam().getPoints() + 3);
+
+        } else if (game.getAwayGoals() > game.getHomeGoals()) {
+
+            game.getAwayTeam().setWins(game.getAwayTeam().getWins() + 1);
+            game.getHomeTeam().setLosses(game.getHomeTeam().getLosses() + 1);
+            game.getAwayTeam().setPoints(game.getAwayTeam().getPoints() + 3);
+
+        } else {
+
+            game.getAwayTeam().setDraws(game.getAwayTeam().getDraws() + 1);
+            game.getHomeTeam().setDraws(game.getHomeTeam().getDraws() + 1);
+            game.getAwayTeam().setPoints(game.getAwayTeam().getPoints() + 1);
+            game.getHomeTeam().setPoints(game.getHomeTeam().getPoints() + 1);
+
+        }
+
+        game.getHomeTeam().setMatchesPlayed(game.getHomeTeam().getMatchesPlayed() + 1);
+        game.getAwayTeam().setMatchesPlayed(game.getAwayTeam().getMatchesPlayed() + 1);
+
+        game.getHomeTeam().setGoalsAgainst(game.getHomeTeam().getGoalsAgainst() + game.getAwayGoals());
+        game.getHomeTeam().setGoalsFor(game.getHomeTeam().getGoalsFor() + game.getHomeGoals());
+
+        game.getAwayTeam().setGoalsAgainst(game.getAwayTeam().getGoalsAgainst() + game.getHomeGoals());
+        game.getAwayTeam().setGoalsFor(game.getAwayTeam().getGoalsFor() + game.getAwayGoals());
+    }
+
+    private void decideMatchup(Game game) {
+        Level homeLevel = game.getHomeTeam().getLevel();
+        Level awayLevel = game.getAwayTeam().getLevel();
+
+        switch (homeLevel) {
+            case BAD:
+                switch (awayLevel) {
+                    case BAD:
+                        sameLevelGame(game);
+                        break;
+                    case MEDIUM:
+                        badAgainstMedium(game);
+                        break;
+                    case GOOD:
+                        badAgainstGood(game);
+                        break;
+                }
+                break;
+            case MEDIUM:
+                switch (awayLevel) {
+                    case BAD:
+                        badAgainstMedium(game);
+                        swapHomeAway(game);
+                        break;
+                    case MEDIUM:
+                        sameLevelGame(game);
+                        break;
+                    case GOOD:
+                        mediumAgainstGood(game);
+                        break;
+                }
+                break;
+            case GOOD:
+                switch (awayLevel) {
+                    case BAD:
+                        badAgainstGood(game);
+                        swapHomeAway(game);
+                        break;
+                    case MEDIUM:
+                        mediumAgainstGood(game);
+                        swapHomeAway(game);
+                        break;
+                    case GOOD:
+                        derby(game);
+                        break;
+                }
+                break;
+        }
     }
 
     private static void badAgainstGood(Game game) {
@@ -396,7 +407,7 @@ public class GameService {
     public List<Game> getAllLatestMatches(Team team) {
         List<Game> games = new ArrayList<>(getAllLatestGamesTeam(team));
 
-        games.sort(Comparator.comparing(Game::getStartTime));
+        games.sort(Comparator.comparing(Game::getStartTime).reversed());
 
         return games;
     }
