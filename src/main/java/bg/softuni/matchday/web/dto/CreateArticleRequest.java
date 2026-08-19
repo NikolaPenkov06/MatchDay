@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddCommentRequest {
+public class CreateArticleRequest {
 
+    private String title;
+    private String image;
     private String content;
-    private UUID commenterId;
+    private String author;
 }

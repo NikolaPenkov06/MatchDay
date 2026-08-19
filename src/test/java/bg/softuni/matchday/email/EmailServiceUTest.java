@@ -1,7 +1,7 @@
 package bg.softuni.matchday.email;
 
-import bg.softuni.matchday.email.client.EmailClient;
-import bg.softuni.matchday.email.client.dto.EmailRequest;
+import bg.softuni.matchday.email.model.Email;
+import bg.softuni.matchday.email.reposritory.EmailRepository;
 import bg.softuni.matchday.email.service.EmailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,20 +9,22 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class EmailServiceUTest {
+
     @Mock
-    private EmailClient emailClient;
+    private EmailRepository emailRepository;
+
+    @Mock
+    private MailSender mailSender;
 
     @InjectMocks
     private EmailService emailService;
@@ -31,11 +33,6 @@ public class EmailServiceUTest {
     void sendEmail_sendsCorrectEmail() {
         UUID userId = UUID.randomUUID();
 
-        ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.OK);
-
-        when(emailClient.sendEmail(any(EmailRequest.class)))
-                .thenReturn(response);
-
         emailService.sendEmail(
                 userId,
                 "test@gmail.com",
@@ -43,17 +40,28 @@ public class EmailServiceUTest {
                 "Hello!"
         );
 
-        ArgumentCaptor<EmailRequest> captor =
-                ArgumentCaptor.forClass(EmailRequest.class);
+        // Verify email was sent
+        ArgumentCaptor<SimpleMailMessage> messageCaptor =
+                ArgumentCaptor.forClass(SimpleMailMessage.class);
 
-        verify(emailClient).sendEmail(captor.capture());
+        verify(mailSender).send(messageCaptor.capture());
 
-        EmailRequest request = captor.getValue();
+        SimpleMailMessage message = messageCaptor.getValue();
 
-        assertEquals(userId, request.getUserId());
-        assertEquals("test@gmail.com", request.getUserEmail());
-        assertEquals("Subject", request.getSubject());
-        assertEquals("Hello!", request.getBody());
+        assertEquals("test@gmail.com", message.getTo()[0]);
+        assertEquals("Subject", message.getSubject());
+        assertEquals("Hello!", message.getText());
 
+        // Verify email was saved to database
+        ArgumentCaptor<Email> emailCaptor =
+                ArgumentCaptor.forClass(Email.class);
+
+        verify(emailRepository).save(emailCaptor.capture());
+
+        Email email = emailCaptor.getValue();
+
+        assertEquals(userId, email.getUserId());
+        assertEquals("Subject", email.getSubject());
+        assertEquals("Hello!", email.getBody());
     }
 }

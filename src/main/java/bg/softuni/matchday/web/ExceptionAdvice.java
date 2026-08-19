@@ -36,7 +36,9 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleAnyException(Exception exception){
+    public ModelAndView handleAnyException(Exception exception) {
+
+        exception.printStackTrace();
 
         return new ModelAndView("internal-server-error");
     }

@@ -2,12 +2,15 @@ package bg.softuni.matchday.comment.service;
 
 import bg.softuni.matchday.article.model.Article;
 import bg.softuni.matchday.article.service.ArticleService;
+import bg.softuni.matchday.comment.CommentClient;
 import bg.softuni.matchday.comment.model.Comment;
 import bg.softuni.matchday.comment.repository.CommentRepository;
 import bg.softuni.matchday.team.service.TeamService;
 import bg.softuni.matchday.user.model.User;
 import bg.softuni.matchday.user.repository.UserRepository;
 import bg.softuni.matchday.user.service.UserService;
+import bg.softuni.matchday.web.dto.AddCommentRequest;
+import bg.softuni.matchday.web.dto.CommentResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,35 +18,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @Service
 public class CommentService {
 
-    private final CommentRepository commentRepository;
-    private final ArticleService articleService;
-    private final UserService userService;
-
+    private final CommentClient commentClient;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, ArticleService articleService, UserService userService) {
-        this.commentRepository = commentRepository;
-        this.articleService = articleService;
-        this.userService = userService;
+    public CommentService(CommentClient commentClient) {
+        this.commentClient = commentClient;
     }
 
-    public void addComment(UUID id, UUID userId, String content) {
-        Article article = articleService.getById(id);
-        User user = userService.getById(userId);
+    public void addComment(UUID articleId, UUID userId, String content) {
 
-        Comment comment = Comment.builder()
-                .content(content)
-                .article(article)
-                .commenter(user)
-                .commentDate(LocalDateTime.now())
-                .build();
-        commentRepository.save(comment);
+        AddCommentRequest request = new AddCommentRequest();
+        request.setContent(content);
+        request.setCommenterId(userId);
 
+        commentClient.addComment(articleId, request);
+    }
+
+    public List<CommentResponse> getCommentsByArticleId(UUID articleId) {
+        return commentClient.getComments(articleId);
     }
 }

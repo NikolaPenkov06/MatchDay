@@ -83,14 +83,18 @@
 
         <img class="comment-pic" th:src="@{${user.profilePicture}}">
 
-        <form class="comment-input-wrapper" th:action="@{/articles/{id}/comments(id=${article.id})}" th:method="POST" th:object="${addCommentRequest}">
+        <form class="comment-input-wrapper"
+              th:action="@{/articles/{id}/comments(id=${article.id})}"
+              th:method="POST"
+              th:object="${addCommentRequest}">
 
-        <textarea class="comment-input" th:field="*{content}" placeholder="Add a comment..." rows="1" oninput="autoResize(this)"></textarea>
-
-            <input type="hidden" th:field="*{articleId}" th:value="${article.id}"/>
+    <textarea class="comment-input"
+              th:field="*{content}"
+              placeholder="Add a comment..."
+              rows="1"
+              oninput="autoResize(this)"></textarea>
 
             <button type="submit" class="post-btn">Post</button>
-
         </form>
     </section>
 

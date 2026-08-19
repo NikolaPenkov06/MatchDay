@@ -12,6 +12,8 @@ import bg.softuni.matchday.user.model.User;
 import bg.softuni.matchday.user.service.UserService;
 import bg.softuni.matchday.web.dto.AddArticleRequest;
 import bg.softuni.matchday.web.dto.AddCommentRequest;
+import bg.softuni.matchday.web.dto.CommentResponse;
+import bg.softuni.matchday.web.dto.CommentView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,13 +34,15 @@ public class ArticleController {
     private final UserService userService;
     private final ArticleService articleService;
     private final GameService gameService;
+    private final CommentService commentService;
 
     @Autowired
-    public ArticleController(TeamService teamService, UserService userService, ArticleService articleService, GameService gameService) {
+    public ArticleController(TeamService teamService, UserService userService, ArticleService articleService, GameService gameService, CommentService commentService) {
         this.teamService = teamService;
         this.userService = userService;
         this.articleService = articleService;
         this.gameService = gameService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/articles")
@@ -64,8 +68,9 @@ public class ArticleController {
         gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         Article article = articleService.getById(id);
-        List<Comment> comments = article.getComments().stream().sorted(Comparator.comparing(Comment::getCommentDate).reversed()).toList();
+        List<CommentView> comments = commentService.getCommentsByArticleId(id).stream().map(comment -> new CommentView(comment.getId(), userService.getById(comment.getCommenterId()), comment.getContent(), comment.getCommentDate())).sorted(Comparator.comparing(CommentView::getCommentDate).reversed()).toList();
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
+
         ModelAndView modelAndView = new ModelAndView("article");
         modelAndView.addObject("user", user);
         modelAndView.addObject("article", article);

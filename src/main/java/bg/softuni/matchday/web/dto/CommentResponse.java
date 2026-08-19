@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddCommentRequest {
+public class CommentResponse {
 
-    private String content;
+    private UUID id;
     private UUID commenterId;
+    private String content;
+    private LocalDateTime commentDate;
 }
