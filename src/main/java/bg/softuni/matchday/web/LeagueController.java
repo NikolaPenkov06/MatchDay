@@ -59,7 +59,6 @@ public class LeagueController {
     public ModelAndView getLeagueTablePage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails){
         List<Team> teams = leagueService.findById(id).getTeams();
         teams.sort(Comparator.comparingInt(Team::getPoints).thenComparingInt(team -> team.getGoalsFor() - team.getGoalsAgainst()).reversed());
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         ModelAndView modelAndView = new ModelAndView();

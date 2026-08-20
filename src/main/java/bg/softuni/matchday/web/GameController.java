@@ -44,7 +44,6 @@ public class GameController {
 
     @GetMapping("/game/{id}")
     public ModelAndView getGamePage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         Game game = gameService.getById(id);
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
@@ -80,7 +79,6 @@ public class GameController {
     @GetMapping("/matches/{id}")
     public ModelAndView getMatchesPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails){
         League league = leagueService.findById(id);
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         ModelAndView modelAndView = new ModelAndView();
@@ -97,7 +95,6 @@ public class GameController {
     @GetMapping("/all-upcoming-matches/league/{id}")
     public ModelAndView getAllUpcomingLeagueMatchesPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails){
         League league = leagueService.findById(id);
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         String header = leagueService.getHeaderUpcoming(league);
@@ -114,7 +111,6 @@ public class GameController {
     @GetMapping("/all-latest-matches/league/{id}")
     public ModelAndView getAllLatestLeagueMatchesPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails){
         League league = leagueService.findById(id);
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         String header = leagueService.getHeaderLatest(league);
@@ -131,7 +127,6 @@ public class GameController {
     @GetMapping("/all-upcoming-matches/team/{id}")
     public ModelAndView getAllUpcomingTeamMatchesPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails){
         Team team = teamService.getById(id);
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         String header = teamService.getHeaderUpcoming(team);
@@ -148,7 +143,6 @@ public class GameController {
     @GetMapping("/all-latest-matches/team/{id}")
     public ModelAndView getAllLatestTeamMatchesPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails){
         Team team = teamService.getById(id);
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         String header = teamService.getHeaderLatest(team);
@@ -164,7 +158,6 @@ public class GameController {
 
     @GetMapping("/add-match")
     public ModelAndView getAddMatchPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @RequestParam(required = false) UUID leagueId) {
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         List<League> leagues = leagueService.getAllLeagues();

@@ -32,7 +32,6 @@ public class UserController {
 
     @GetMapping("/edit-roles")
     public ModelAndView getEditRolesPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         List<User> users = userService.getAllUsers();

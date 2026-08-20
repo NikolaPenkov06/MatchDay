@@ -6,6 +6,7 @@ import bg.softuni.matchday.team.model.Team;
 import bg.softuni.matchday.user.model.Country;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,14 +24,17 @@ public class LeagueService {
         this.leagueRepository = leagueRepository;
     }
 
+    @Cacheable("leagues")
     public List<League> getAllLeagues(){
         return leagueRepository.findAll();
     }
 
+    @Cacheable(value = "leaguesByName", key = "#name")
     public League findByName(String name){
         return leagueRepository.findByName(name).get();
     }
 
+    @Cacheable(value = "leaguesById", key = "#id")
     public League findById(UUID id){
         return leagueRepository.findById(id).get();
     }

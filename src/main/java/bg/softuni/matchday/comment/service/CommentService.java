@@ -14,6 +14,8 @@ import bg.softuni.matchday.web.dto.CommentResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class CommentService {
         this.commentClient = commentClient;
     }
 
+    @CacheEvict(value = "comments", key = "#articleId")
     public void addComment(UUID articleId, UUID userId, String content) {
 
         AddCommentRequest request = new AddCommentRequest();
@@ -41,6 +44,7 @@ public class CommentService {
         commentClient.addComment(articleId, request);
     }
 
+    @Cacheable(value = "comments", key = "#articleId")
     public List<CommentResponse> getCommentsByArticleId(UUID articleId) {
         return commentClient.getComments(articleId);
     }

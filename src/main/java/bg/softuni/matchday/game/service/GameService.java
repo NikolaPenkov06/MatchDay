@@ -15,6 +15,8 @@ import bg.softuni.matchday.web.dto.AddMatchRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -57,6 +59,7 @@ public class GameService {
         return games;
     }
 
+    @Cacheable(value = "upcomingGames", key = "#league.id")
     public List<Game> getAllUpcomingGames(League league) {
         List<Game> games = new ArrayList<>(
                 gameRepository.findAllByStartTimeAfter(LocalDateTime.now())
@@ -85,6 +88,7 @@ public class GameService {
         return games;
     }
 
+    @Cacheable(value = "latestGames", key = "#league.id")
     public List<Game> getAllLatestGames(League league) {
         List<Game> games = new ArrayList<>(
                 gameRepository.findAllByStartTimeBefore(LocalDateTime.now())
@@ -97,6 +101,7 @@ public class GameService {
         return games;
     }
 
+    @CacheEvict(value = {"upcomingGames", "latestGames", "upcomingTeamGames", "latestTeamGames"}, allEntries = true)
     public void processGame() {
         List<Game> gamesToProcess = gameRepository.findAllByStartTimeBefore(LocalDateTime.now())
                 .stream()
@@ -337,6 +342,7 @@ public class GameService {
         game.setAwayShotsOffTarget(tempOffTarget);
     }
 
+    @CacheEvict(value = {"upcomingGames", "latestGames", "upcomingTeamGames", "latestTeamGames"}, allEntries = true)
     public void addGame(AddMatchRequest addMatchRequest) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -467,6 +473,7 @@ public class GameService {
 
     }
 
+    @Cacheable(value = "upcomingTeamGames", key = "#team.id")
     public List<Game> getAllUpcomingGamesTeam(Team team) {
         List<Game> upcomingGames = new ArrayList<>();
         upcomingGames.addAll(gameRepository.findAllByStartTimeAfterAndHomeTeamName(LocalDateTime.now(), team.getName()));
@@ -474,6 +481,7 @@ public class GameService {
         return upcomingGames;
     }
 
+    @Cacheable(value = "latestTeamGames", key = "#team.id")
     public List<Game> getAllLatestGamesTeam(Team team) {
         List<Game> latestGames = new ArrayList<>();
         latestGames.addAll(gameRepository.findAllByStartTimeBeforeAndHomeTeamName(LocalDateTime.now(), team.getName()));
@@ -780,5 +788,9 @@ public class GameService {
             }
         }
         return message;
+    }
+
+    public List<Game> getAllGamesInTimeWindow(LocalDateTime start, LocalDateTime end) {
+        return gameRepository.findAllByStartTimeBetween(start, end);
     }
 }

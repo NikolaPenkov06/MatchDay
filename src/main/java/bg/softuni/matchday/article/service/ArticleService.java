@@ -7,6 +7,9 @@ import bg.softuni.matchday.web.dto.AddArticleRequest;
 import bg.softuni.matchday.web.dto.ArticleResponse;
 import bg.softuni.matchday.web.dto.CreateArticleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -23,6 +26,7 @@ public class ArticleService {
         this.articleClient = articleClient;
     }
 
+    @CacheEvict(value = "articles", allEntries = true)
     public void addArticle(AddArticleRequest addArticleRequest, User user) {
 
         CreateArticleRequest request = new CreateArticleRequest(
@@ -35,6 +39,7 @@ public class ArticleService {
         articleClient.addArticle(request);
     }
 
+    @Cacheable(value = "articles")
     public List<Article> getAllArticles() {
 
         return articleClient.getAllArticles()
@@ -55,6 +60,7 @@ public class ArticleService {
         return articles;
     }
 
+    @Cacheable(value = "articlesById", key = "#id")
     public Article getById(UUID id) {
 
         ArticleResponse response = articleClient.getArticleById(id);
@@ -62,6 +68,7 @@ public class ArticleService {
         return mapToArticle(response);
     }
 
+    @Caching(evict = {@CacheEvict(value = "articles", allEntries = true), @CacheEvict(value = "articlesById", key = "#id")})
     public void deleteArticle(UUID id) {
 
         articleClient.deleteArticle(id);

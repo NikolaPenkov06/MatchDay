@@ -50,7 +50,6 @@ public class ArticleController {
         //articleService.extendArticle();
         //teamService.resetStats();
         //gameService.addGame();
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         List<Article> articles = articleService.getAllArticles();
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
@@ -65,7 +64,6 @@ public class ArticleController {
 
     @GetMapping("/article/{id}")
     public ModelAndView getArticlePage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         Article article = articleService.getById(id);
         List<CommentView> comments = commentService.getCommentsByArticleId(id).stream().map(comment -> new CommentView(comment.getId(), userService.getById(comment.getCommenterId()), comment.getContent(), comment.getCommentDate())).sorted(Comparator.comparing(CommentView::getCommentDate).reversed()).toList();
@@ -84,7 +82,6 @@ public class ArticleController {
 
     @GetMapping("/add-article")
     public ModelAndView getAddArticlePage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         String position = teamService.getTeamPosition(user.getFavouriteTeam());
         ModelAndView modelAndView = new ModelAndView("add-article");

@@ -12,6 +12,8 @@ import bg.softuni.matchday.team.repository.TeamRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -103,6 +105,7 @@ public class TeamService {
         return matchDetails.toString();
     }
 
+    @Cacheable(value = "teamsByName", key = "#favouriteTeamName")
     public Team findByName(String favouriteTeamName) {
         return teamRepository.findByName(favouriteTeamName).get();
     }
@@ -312,6 +315,7 @@ public class TeamService {
         teamRepository.save(team);
     }
 
+    @Cacheable(value = "teams", key = "#id")
     public Team getById(UUID id) {
         return teamRepository.findById(id).orElseThrow(() -> new RuntimeException("Team not found with id: " + id));
     }
@@ -332,6 +336,7 @@ public class TeamService {
         return header.toString();
     }
 
+    @CacheEvict(value = "teams", key = "#team.id")
     public void save(Team team){
         teamRepository.save(team);
     }

@@ -33,7 +33,6 @@ public class TeamController {
 
     @GetMapping("/team/{id}")
     public ModelAndView getTeamInfoPage(@PathVariable UUID id, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         Team team = teamService.getById(id);
         String position = teamService.getTeamPosition(user.getFavouriteTeam());

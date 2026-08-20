@@ -12,6 +12,8 @@ import bg.softuni.matchday.web.dto.LoginRequest;
 import bg.softuni.matchday.web.dto.RegisterRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -104,10 +106,12 @@ public class UserService {
        return registerRequest.getPassword().equals(registerRequest.getConfirmPassword());
    }
 
+    @Cacheable(value = "users", key = "#userId")
     public User getById(UUID userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
+    @Cacheable(value = "usersByUsername", key = "#username")
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
     }
@@ -116,18 +120,21 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
     public void makeAdmin(UUID id) {
         User user = userRepository.findById(id).orElse(null);
         user.setRole(Role.ADMIN);
         userRepository.save(user);
     }
 
+    @CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
     public void removeAdmin(UUID id) {
         User user = userRepository.findById(id).orElse(null);
         user.setRole(Role.USER);
         userRepository.save(user);
     }
 
+    @CacheEvict(value = {"users", "usersByUsername"}, allEntries = true)
     public void changeEmailPreference(UUID id) {
         User user = userRepository.findById(id).orElse(null);
         user.setEmailsEnabled(!user.isEmailsEnabled());

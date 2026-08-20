@@ -121,7 +121,6 @@ public class IndexController {
         //teamService.updateTeams();
         //teamService.updateManagers();
         //gameService.addAllGames();
-        gameService.processGame();
         User user = userService.getById(authenticationDetails.getUserId());
         List<Team> teams = user.getFavouriteTeam().getLeague().getTeams();
         teams.sort(Comparator.comparingInt(Team::getPoints).thenComparingInt(team -> team.getGoalsFor() - team.getGoalsAgainst()).reversed());

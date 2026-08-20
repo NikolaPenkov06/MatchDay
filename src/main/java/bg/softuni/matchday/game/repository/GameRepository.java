@@ -26,4 +26,6 @@ public interface GameRepository extends JpaRepository<Game, UUID> {
     List<Game> findAllByHomeTeamName(String homeTeamName);
 
     List<Game> findAllByAwayTeamName(String awayTeamName);
+
+    List<Game> findAllByStartTimeBetween(LocalDateTime start, LocalDateTime end);
 }
