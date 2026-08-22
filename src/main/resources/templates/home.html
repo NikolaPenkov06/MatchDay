@@ -42,14 +42,7 @@
     <div class="profile-buttons">
         <a th:href="@{/}" class="logout">Log out</a>
 
-        <form th:action="@{/email-preference/{id}(id=${user.id})}"
-              method="post"
-              style="display:inline;">
-            <button type="submit"
-                    class="logout"
-                    th:text="${user.emailsEnabled} ? 'Disable Emails' : 'Enable Emails'">
-            </button>
-        </form>
+        <a th:href="@{/edit-profile}" class="logout">Edit profile</a>
     </div>
 </aside>
 

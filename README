@@ -1,0 +1,81 @@
+MatchDay
+
+MatchDay is a football-focused web application that provides users with football news, matches, league information, teams, comments, and user profile management.
+
+Technology Stack
+
+Main Application
+
+Java 17
+Spring Boot
+Spring MVC
+Spring Security
+Spring Data JPA
+Thymeleaf
+Spring Cloud OpenFeign
+Spring Cache
+Spring Scheduling
+Maven
+MySQL
+Lombok
+Jakarta Bean Validation
+JUnit
+
+REST Microservice
+
+Java 17
+Spring Boot
+Spring Web
+Spring Data JPA
+Maven
+MySQL
+
+Supported Features
+
+User registration and login
+User authentication and authorization
+User profile management
+Favourite team selection
+User role management
+Football article browsing
+Adding and deleting articles
+Adding and viewing article comments
+Football match management
+League table viewing
+Team information
+Email notifications
+Email preference management
+Data validation
+Caching
+Scheduled tasks
+
+Functionalities
+
+Users can register and log in to the application.
+Users can edit their profile information, including their favourite team.
+Administrators can manage user roles.
+Administrators can add and delete football articles.
+Users can browse football articles.
+Users can add comments to articles and view comments belonging to an article.
+Administrators can add football matches.
+Users can view matches and league tables.
+Users can view information about football teams and their statistics.
+Users can manage their email notification preferences.
+The application can send email notifications to users.
+The application uses caching to reduce unnecessary requests and improve performance.
+The application uses scheduled tasks to perform automated operations.
+
+Integrations
+
+The Main application communicates with the REST microservice through REST APIs using Spring Cloud OpenFeign.
+The REST microservice uses a separate MySQL database.
+The application integrates with an SMTP mail server for sending emails.
+The application uses MySQL for persistent data storage.
+
+REST Microservice
+
+Article and comment functionality is handled by a separate REST microservice.
+
+The REST microservice is available in a separate GitHub repository:
+
+https://github.com/NikolaPenkov06/MatchDayService.git

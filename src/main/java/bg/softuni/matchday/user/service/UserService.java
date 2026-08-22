@@ -8,8 +8,10 @@ import bg.softuni.matchday.team.service.TeamService;
 import bg.softuni.matchday.user.model.Role;
 import bg.softuni.matchday.user.model.User;
 import bg.softuni.matchday.user.repository.UserRepository;
+import bg.softuni.matchday.web.dto.EditProfileRequest;
 import bg.softuni.matchday.web.dto.LoginRequest;
 import bg.softuni.matchday.web.dto.RegisterRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -141,5 +143,29 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public EditProfileRequest getUserDetailsAsRequest(User user) {
+        EditProfileRequest request = new EditProfileRequest();
 
+        request.setFirstName(user.getFirstName());
+        request.setLastName(user.getLastName());
+        request.setUsername(user.getUsername());
+        request.setProfilePicture(user.getProfilePicture());
+        request.setEmail(user.getEmail());
+        request.setCountry(user.getCountry());
+        request.setFavouriteTeamName(user.getFavouriteTeam().getName());
+
+        return request;
+    }
+
+
+    public void updateProfile(UUID userId, EditProfileRequest editProfileRequest) {
+        User user = userRepository.findById(userId).get();
+        user.setFirstName(editProfileRequest.getFirstName());
+        user.setLastName(editProfileRequest.getLastName());
+        user.setEmail(editProfileRequest.getEmail());
+        user.setUsername(editProfileRequest.getUsername());
+        user.setCountry(editProfileRequest.getCountry());
+        user.setFavouriteTeam(teamService.findByName(editProfileRequest.getFavouriteTeamName()));
+        userRepository.save(user);
+    }
 }

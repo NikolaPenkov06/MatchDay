@@ -6,12 +6,16 @@ import bg.softuni.matchday.team.service.TeamService;
 import bg.softuni.matchday.user.model.Role;
 import bg.softuni.matchday.user.model.User;
 import bg.softuni.matchday.user.service.UserService;
+import bg.softuni.matchday.web.dto.EditProfileRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +47,47 @@ public class UserController {
         modelAndView.addObject("users", users);
 
         return modelAndView;
+    }
+
+    @GetMapping("/edit-profile")
+    public ModelAndView getEditProfilePage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        User user = userService.getById(authenticationDetails.getUserId());
+        String position = teamService.getTeamPosition(user.getFavouriteTeam());
+        List<String> teamNames = teamService.getAllTeamsNames();
+        Collections.sort(teamNames);
+        ModelAndView modelAndView = new ModelAndView("edit-profile");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("position", position);
+        modelAndView.addObject("latestMatch", teamService.getLastMatchDetails(user.getFavouriteTeam()));
+        modelAndView.addObject("editProfileRequest", userService.getUserDetailsAsRequest(user));
+        modelAndView.addObject("teamNames", teamNames);
+
+
+        return modelAndView;
+    }
+
+    @PostMapping("/edit-profile")
+    public ModelAndView editProfile(@Valid @ModelAttribute("editProfileRequest") EditProfileRequest editProfileRequest, BindingResult bindingResult, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+
+        if (bindingResult.hasErrors()) {
+            User user = userService.getById(authenticationDetails.getUserId());
+
+            String position = teamService.getTeamPosition(user.getFavouriteTeam());
+            List<String> teamNames = teamService.getAllTeamsNames();
+            Collections.sort(teamNames);
+
+            ModelAndView modelAndView = new ModelAndView("edit-profile");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("position", position);
+            modelAndView.addObject("latestMatch", teamService.getLastMatchDetails(user.getFavouriteTeam()));
+            modelAndView.addObject("teamNames", teamNames);
+
+            return modelAndView;
+        }
+
+        userService.updateProfile(authenticationDetails.getUserId(), editProfileRequest);
+
+        return new ModelAndView("redirect:/edit-profile");
     }
 
     @PostMapping("/edit-roles/make/{id}")
